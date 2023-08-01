@@ -1,5 +1,6 @@
 <script>
-	// Here is a comment
+	import { writable } from 'svelte/store';
+	import { registerStore } from './storeRegister';
 
 	/**
 	 * @type {string} This modifies the color
@@ -14,4 +15,10 @@
 	export let noType;
 
 	let hello = 'world';
+
+	let store = writable(5);
 </script>
+
+<button on:click={() => ($store = $store + 1)}>add</button>
+
+<div kuik={test}>{$store}</div>
