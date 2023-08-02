@@ -1,5 +1,6 @@
 import adapter from '@sveltejs/adapter-auto';
 import { kPreprocess } from './src/lib/preprocess.js';
+import sequence from 'svelte-sequential-preprocessor'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -9,7 +10,9 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter(),
 	},
-	preprocess: kPreprocess()
+	preprocess: sequence([
+		kPreprocess()
+	])
 };
 
 export default config;
