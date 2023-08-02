@@ -30,15 +30,16 @@
 
 <script>
 	import { get } from 'svelte/store';
-	// import { RegisteredStores, registerStore } from './storeRegister';
 	import { onDestroy, onMount } from 'svelte';
-	import { JSONEditor } from 'svelte-jsoneditor';
+	import StoreEditor from './StoreEditor.svelte';
 
 	export let enable = false;
 
 	export let stores = [];
 
-	// let storeObj = [];
+	// The active store for the editor
+	let activeStoreKey = '';
+
 	let storeObj = {};
 	let subscriptions = [];
 	let storeObjText = '';
@@ -51,53 +52,12 @@
 		console.log({ test });
 	});
 
-	async function subscribeToStores() {
-		// console.log({ $RegisteredStores });
-		if (Object.entries($RegisteredStores).length) {
-			for (let key in $RegisteredStores) {
-				// const entry = $RegisteredStores[key].store.subscribe((v) => {
-				// 	storeObj[key] = {
-				// 		json: v
-				// 	};
-				// });
-				const entry = $RegisteredStores[key].store.subscribe(async (v) => {
-					storeObj[key] = v;
-					storeObjText = JSON.stringify(storeObj);
-					editorContent = {
-						json: await JSON.parse(storeObjText)
-					};
-				});
-
-				// storeObjText = JSON.stringify(storeObj);
-
-				subscriptions = [...subscriptions, entry];
-			}
-		}
+	function activateStore(key) {
+		activeStoreKey = key;
 	}
-
-	onDestroy(() => {
-		if (subscriptions.length) {
-			// subscriptions.forEach((v) => v());
-		}
-	});
-
-	function handleChange(updatedContent, previousContent, { contentErrors, patchResult }) {
-		// content is an object { json: JSONValue } | { text: string }
-		// console.log('onChange: ', { updatedContent, previousContent, contentErrors, patchResult });
-
-		if (updatedContent.text) {
-			storeObj = JSON.parse(updatedContent.text);
-		}
-
-		for (let key in storeObj) {
-			$RegisteredStores[key].store.set(storeObj[key]);
-		}
-	}
-
-	$: $RegisteredStores, subscribeToStores();
 </script>
 
-<style>
+<style lang="scss">
 	.container {
 		position: fixed;
 		bottom: 0;
@@ -105,17 +65,42 @@
 		width: 100vw;
 		height: 400px;
 		background-color: #ccc;
+		display: grid;
+		grid-template-columns: 200px 1fr;
+	}
+
+	.store-list-item {
+		width: 100%;
+
+		&:hover {
+			background-color: orange;
+		}
+	}
+
+	.active {
+		background-color: orange;
 	}
 </style>
 
-{#if enable && storeObjText}
-	{storeObjText}
+{#if enable}
 	<div class="container">
-		<JSONEditor
-			content={editorContent}
-			onChange={(...args) => handleChange(...args)}
-			mode="text"
-			mainMenuBar={false}
-		/>
+		<div>
+			{#each Object.entries($RegisteredStores) as [storeKey, value]}
+				<div
+					class="store-list-item"
+					class:active={storeKey === activeStoreKey}
+					on:click={() => {
+						activateStore(storeKey);
+					}}
+				>
+					{storeKey}
+				</div>
+			{/each}
+		</div>
+		<div>
+			{#if activeStoreKey}
+				<StoreEditor store={$RegisteredStores[activeStoreKey].store} />
+			{/if}
+		</div>
 	</div>
 {/if}

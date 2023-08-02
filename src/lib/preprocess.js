@@ -4,6 +4,11 @@ import MagicString from 'magic-string';
 import fs from 'fs';
 import path from 'path';
 
+const ignoreFiles = [
+  'StoreTools.svelte',
+  'StoreEditor.svelte'
+]
+
 const parseImportMap = (importMap) => {
   return Object.entries(importMap)
     .filter(([_from, { imports }]) => imports.length > 0)
@@ -25,16 +30,28 @@ const addImport = (importMap, module, imports) => {
   }
 }
 
+function processFile(file) {
+  let check = false;
+  for (let i = 0; i < ignoreFiles.length; i++) {
+    check = file.includes(ignoreFiles[i])
+
+    if (check) {
+      break;
+    }
+  }
+
+  return !check;
+}
+
 export function kPreprocess() {
   return {
     name: 'kuikPreprocess',
     markup: ({ content, filename }) => {
       const ast = parse(content)
       const markup = new MagicString(content);
+      console.log({ filename }, processFile(filename))
 
-      console.log({ filename })
-
-      if (!filename.includes('StoreTools.svelte')) {
+      if (processFile(filename)) {
 
         // console.log({ filename })
         const componentProps = {
@@ -162,7 +179,10 @@ export function kPreprocess() {
           }
         }
 
-        // console.log('RESULT: ', markup.toString())
+        if (filename.includes('Component.svelte')) {
+
+          console.log('RESULT: ', markup.toString())
+        }
       }
 
       return {
