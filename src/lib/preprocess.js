@@ -6,7 +6,8 @@ import path from 'path';
 
 const ignoreFiles = [
   'StoreTools.svelte',
-  'StoreEditor.svelte'
+  'StoreEditor.svelte',
+  'StoreToolsHistory.svelte'
 ]
 
 const parseImportMap = (importMap) => {

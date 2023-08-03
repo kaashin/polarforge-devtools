@@ -5,7 +5,9 @@
 	import { JSONEditor } from 'svelte-jsoneditor';
 
 	export let store = writable({});
-	export let activeKey = '';
+	export let activeStoreKey = '';
+	export let contentOverride = null;
+	export let history = writable([]);
 
 	export let content = {
 		text: '',
@@ -18,7 +20,6 @@
 	let storeUnsubscribe = () => {};
 
 	function handleStoreChange() {
-		console.log('store has changed');
 		storeObjText = '';
 
 		if ($store) {
@@ -49,11 +50,11 @@
 	$: store, handleStoreChange();
 </script>
 
-{#key store}
+{#key store || $history}
 	<JSONEditor
 		content={editorContent}
 		onChange={(...args) => handleChange(...args)}
 		mode="text"
-		mainMenuBar={false}
+		mainMenuBar={true}
 	/>
 {/key}
