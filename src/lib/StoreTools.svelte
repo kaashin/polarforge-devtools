@@ -22,6 +22,11 @@
 		}
 	}
 
+	export const ActiveStoreKey = (() => {
+		const store = writable('');
+		return { ...store };
+	})();
+
 	export const RegisteredStores = (() => {
 		const store = writable({});
 
@@ -40,6 +45,10 @@
 	import { onDestroy, onMount } from 'svelte';
 	import StoreEditor from './StoreEditor.svelte';
 	import StoreToolsHistory from './StoreToolsHistory.svelte';
+	import StoreToolsDetails from './StoreToolsDetails.svelte';
+	import StoreToolsCss from './StoreToolsCss.svelte';
+	import ChevronDoubleDown from './ChevronDoubleDown.svelte';
+	import UnlogIcon from './UnlogIcon.svelte';
 
 	export let enable = false;
 
@@ -50,6 +59,7 @@
 	let activeHistoryIndex = 0;
 	let unsubscribeArr = [];
 	let historyCount = 0;
+	let open = writable(true);
 
 	onMount(() => {
 		stores.forEach((s) => registerStore(s.name, s.store, null));
@@ -78,26 +88,27 @@
 	}
 
 	function activateStore(key) {
-		activeStoreKey = key;
+		// activeStoreKey = key;
+		$ActiveStoreKey = key;
 		activeHistoryIndex = 0;
-		$RegisteredStores[activeStoreKey].store.set(
-			get($RegisteredStores[activeStoreKey].history)[activeHistoryIndex].data
+		$RegisteredStores[$ActiveStoreKey].store.set(
+			get($RegisteredStores[$ActiveStoreKey].history)[activeHistoryIndex].data
 		);
 
 		$StoreToolsState.rewindMode = false;
 	}
 
 	function activateHistoryIndex(index) {
-		const historyValues = get($RegisteredStores[activeStoreKey].history);
+		const historyValues = get($RegisteredStores[$ActiveStoreKey].history);
 		// if index is not zero, we are looking at historical entry
 		if (index === 0) {
-			$RegisteredStores[activeStoreKey].store.set(historyValues[index].data);
+			$RegisteredStores[$ActiveStoreKey].store.set(historyValues[index].data);
 			// console.log('hisotry val', historyValues[index].data);
 			$StoreToolsState.rewindMode = false;
 		} else if (index > 0) {
 			$StoreToolsState.rewindMode = true;
 			// console.log('hisotry val', historyValues[index].data);
-			$RegisteredStores[activeStoreKey].store.set(historyValues[index].data);
+			$RegisteredStores[$ActiveStoreKey].store.set(historyValues[index].data);
 		} else {
 			// do nothing.
 			return;
@@ -106,76 +117,194 @@
 		activeHistoryIndex = index;
 	}
 
+	function minimize() {
+		$open = false;
+	}
+
+	function openUnlog() {
+		$open = true;
+	}
+
 	onDestroy(() => {
 		unsubscribeArr.forEach((entry) => entry());
 	});
 
-	$: console.log({ $RegisteredStores });
 	$: $RegisteredStores, subscribeStores();
-	$: $RegisteredStores[activeStoreKey]?.history, console.log('history updated');
+	$: $RegisteredStores[$ActiveStoreKey]?.history, console.log('history updated');
 </script>
 
 <style lang="scss">
+	:global(.unlog *, *::before, *::after) {
+		box-sizing: border-box;
+		margin: 0;
+		-webki-font-smoothing: antialiased;
+		line-height: 1.25;
+		font-size: 14px;
+		font-family: 'Segoe UI Mono', 'Liberation Mono', Menlo, Monaco, Consolas, monospace;
+
+		--padding-container: 0.5rem;
+		--padding-tight: 0.25rem;
+		--color-dark-100: #0b132b;
+		--color-action: #5bc0be;
+		--color-text: #ffffff;
+		--color-dark-200: #1c2541;
+		--color-dark-300: #3a506b;
+
+		--shadow-color: 0deg 0% 55%;
+		--shadow-elevation-low: -0.1px 0.5px 0.6px hsl(var(--shadow-color) / 0.29),
+			-0.2px 0.8px 0.9px -1.2px hsl(var(--shadow-color) / 0.3),
+			-0.6px 1.9px 2.3px -2.3px hsl(var(--shadow-color) / 0.31);
+		--shadow-elevation-medium: -0.1px 0.5px 0.6px hsl(var(--shadow-color) / 0.3),
+			-0.5px 1.7px 2px -0.8px hsl(var(--shadow-color) / 0.31),
+			-1.2px 4px 4.8px -1.6px hsl(var(--shadow-color) / 0.32),
+			-2.8px 9.7px 11.6px -2.3px hsl(var(--shadow-color) / 0.33);
+		--shadow-elevation-high: -0.1px 0.5px 0.6px hsl(var(--shadow-color) / 0.25),
+			-0.7px 2.6px 3.1px -0.3px hsl(var(--shadow-color) / 0.25),
+			-1.3px 4.6px 5.5px -0.6px hsl(var(--shadow-color) / 0.26),
+			-2.1px 7.1px 8.5px -0.9px hsl(var(--shadow-color) / 0.26),
+			-3.1px 10.7px 12.8px -1.2px hsl(var(--shadow-color) / 0.27),
+			-4.6px 15.8px 18.9px -1.5px hsl(var(--shadow-color) / 0.27),
+			-6.6px 23.1px 27.6px -1.8px hsl(var(--shadow-color) / 0.27),
+			-9.5px 32.9px 39.3px -2.1px hsl(var(--shadow-color) / 0.28),
+			-13.2px 45.9px 54.8px -2.3px hsl(var(--shadow-color) / 0.28);
+	}
+	:global(.unlog img, picture, video, canvas, svg) {
+		display: block;
+		max-width: 100%;
+	}
+	:global(.unlog input, button, textarea, select) {
+		font: inherit;
+	}
+	:global(.unlog p, h1, h2, h3, h4, h5, h6) {
+		overflow-wrap: break-word;
+	}
+	:global(.unlog .text-semibold) {
+		font-weight: 600;
+	}
+	:global(.unlog .p-1) {
+	}
+	:global(.unlog .p-2) {
+		padding: 0.5rem;
+	}
+
+	.unlog-trigger {
+		padding: var(--padding-container);
+		position: absolute;
+		bottom: 2rem;
+		left: 1rem;
+		background-color: var(--color-dark-100);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: var(--color-text);
+		border-radius: 0.5rem;
+		box-shadow: var(--shadow-elevation-medium);
+		transition: all 0.2s;
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--color-action);
+		}
+	}
+
 	.container {
 		position: fixed;
 		bottom: 0;
 		right: 0;
 		width: 100vw;
 		height: 400px;
-		background-color: #ccc;
 		display: grid;
 		grid-template-columns: var(--column-one-width) var(--column-two-width) 1fr;
+		grid-template-rows: 1.5rem 1fr;
+		background-color: var(--color-dark-100);
+		color: var(--color-text);
+		visibility: hidden;
 	}
 
+	.header {
+		grid-column: 1 / -1;
+		background-color: var(--color-dark-300);
+		padding: var(--padding-tight);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.store-container {
+		padding: var(--padding-tight);
+	}
 	.store-list-item {
 		width: 100%;
+		padding: var(--padding-tight);
+		cursor: pointer;
 
 		&:hover {
-			background-color: orange;
+			background-color: var(--color-dark-200);
 		}
 	}
 
 	.active {
-		background-color: orange;
+		background-color: var(--color-action);
 	}
 </style>
 
 {#if enable}
-	<div class="container" style:--column-one-width="200px" style:--column-two-width="200px">
-		<div>
-			<h3>Stores</h3>
-			{#each Object.entries($RegisteredStores) as [storeKey, value]}
-				<div
-					class="store-list-item"
-					class:active={storeKey === activeStoreKey}
-					on:click={() => {
-						activateStore(storeKey);
-					}}
-				>
-					{storeKey}
+	<div class="unlog">
+		<div
+			class="container"
+			style:--column-one-width="200px"
+			style:--column-two-width="200px"
+			style:visibility={$open ? 'visible' : 'hidden'}
+		>
+			<div class="header text-semibold">
+				<div>Unlog</div>
+				<div style:cursor="pointer" on:click={minimize}>
+					<ChevronDoubleDown />
 				</div>
-			{/each}
-		</div>
-		<div>
-			<h3>History</h3>
-			{#if activeStoreKey}
-				<StoreToolsHistory
-					history={$RegisteredStores[activeStoreKey].history}
-					on:update={({ detail }) => {
-						historyCount = detail;
-					}}
-					on:select={({ detail }) => activateHistoryIndex(detail)}
-					bind:activeHistoryIndex
-				/>
-			{/if}
-		</div>
+			</div>
+			<div class="store-container">
+				<h3>Stores</h3>
+				{#each Object.entries($RegisteredStores) as [storeKey, value]}
+					<div
+						class="store-list-item"
+						class:active={storeKey === $ActiveStoreKey}
+						on:click={() => {
+							activateStore(storeKey);
+						}}
+					>
+						{storeKey}
+					</div>
+				{/each}
+			</div>
+			<div>
+				{#if $ActiveStoreKey}
+					<!-- {#key $ActiveStoreKey}
+						<StoreToolsDetails />
+					{/key} -->
+					<StoreToolsHistory
+						history={$RegisteredStores[$ActiveStoreKey].history}
+						on:update={({ detail }) => {
+							historyCount = detail;
+						}}
+						on:select={({ detail }) => activateHistoryIndex(detail)}
+						bind:activeHistoryIndex
+					/>
+				{/if}
+			</div>
 
-		<div>
-			{#if activeStoreKey}
-				{#key activeHistoryIndex || historyCount}
-					<StoreEditor store={$RegisteredStores[activeStoreKey].store} />
-				{/key}
-			{/if}
+			<div>
+				{#if $ActiveStoreKey}
+					{#key activeHistoryIndex || historyCount}
+						<StoreEditor store={$RegisteredStores[$ActiveStoreKey].store} />
+					{/key}
+				{/if}
+			</div>
 		</div>
+		{#if !$open}
+			<div class="unlog-trigger" on:click={openUnlog}>
+				<UnlogIcon width="2rem" height="2rem" />
+			</div>
+		{/if}
 	</div>
+	<StoreToolsCss />
 {/if}

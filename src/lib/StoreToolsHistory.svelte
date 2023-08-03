@@ -1,5 +1,7 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+	import ArrowLeft from './ArrowLeft.svelte';
+	import ArrowRight from './ArrowRight.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -12,20 +14,67 @@
 
 <style lang="scss">
 	.active {
-		background-color: orange;
+		background-color: var(--color-action);
 	}
 
-	.history-menu-container {
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		& > .navigation {
+			display: flex;
+			flex-direction: row;
+			gap: 0.2rem;
+		}
+	}
+
+	.list {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.2rem;
+		padding: var(--padding-container);
+	}
+
+	.list-item {
+		padding: var(--padding-tight);
+		cursor: pointer;
+
+		&:hover:not(.active) {
+			background-color: var(--color-dark-200);
+		}
 	}
 </style>
 
-<div class="history-menu-container">
+<div class="list">
+	<div class="header">
+		<h3>History</h3>
+		<div class="navigation">
+			<span
+				on:click={() => {
+					if (activeHistoryIndex > 0) {
+						activeHistoryIndex = activeHistoryIndex - 1;
+						dispatch('select', activeHistoryIndex);
+					}
+				}}
+			>
+				<ArrowLeft />
+			</span>
+			<span
+				on:click={() => {
+					if (activeHistoryIndex < $history.length - 1) {
+						activeHistoryIndex = activeHistoryIndex + 1;
+						dispatch('select', activeHistoryIndex);
+					}
+				}}
+			>
+				<ArrowRight />
+			</span>
+		</div>
+	</div>
 	{#each $history as entry, index (entry.timestamp)}
 		<div
-			class="history-menu-item"
+			class="list-item"
 			class:active={index === activeHistoryIndex}
 			on:click={() => {
 				dispatch('select', index);
