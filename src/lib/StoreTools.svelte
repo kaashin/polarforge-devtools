@@ -139,8 +139,6 @@
 		margin: 0;
 		-webki-font-smoothing: antialiased;
 		line-height: 1.25;
-		font-size: 14px;
-		font-family: 'Segoe UI Mono', 'Liberation Mono', Menlo, Monaco, Consolas, monospace;
 
 		--padding-container: 0.5rem;
 		--padding-tight: 0.25rem;
@@ -219,6 +217,8 @@
 		background-color: var(--color-dark-100);
 		color: var(--color-text);
 		visibility: hidden;
+		font-size: 14px;
+		font-family: 'Segoe UI Mono', 'Liberation Mono', Menlo, Monaco, Consolas, monospace;
 	}
 
 	.header {
@@ -253,7 +253,7 @@
 		<div
 			class="container"
 			style:--column-one-width="200px"
-			style:--column-two-width="200px"
+			style:--column-two-width="240px"
 			style:visibility={$open ? 'visible' : 'hidden'}
 		>
 			<div class="header text-semibold">
@@ -292,7 +292,7 @@
 				{/if}
 			</div>
 
-			<div>
+			<div class="editor">
 				{#if $ActiveStoreKey}
 					{#key activeHistoryIndex || historyCount}
 						<StoreEditor store={$RegisteredStores[$ActiveStoreKey].store} />

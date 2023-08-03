@@ -3,17 +3,33 @@
 		--jse-theme: dark;
 
 		/* over all fonts, sizes, and colors */
+		--jse-font-family-mono: consolas, menlo, monaco, 'Ubuntu Mono', 'source-code-pro', monospace;
+		--jse-font-size-mono: 14px;
+		--jse-font-size: 14px;
+		--jse-font-size-text-mode-search: 80%;
+		--jse-line-height: calc(1em + 4px);
+		--jse-indent-size: calc(1em + 4px);
+		--jse-color-picker-button-size: 1em;
+		--jse-padding: 8px;
+		--jse-text-readonly: #8d8d8d;
+		--jse-text-color-inverse: #fff;
+		--jse-error-color: #ee5341;
+		--jse-warning-color: #fdc539;
 		--jse-theme-color: #2f6dd0;
 		--jse-theme-color-highlight: #467cd2;
-		--jse-background-color: #1e1e1e;
+		/* --jse-background-color: #1e1e1e; */
+		--jse-background-color: var(--color-dark-100)
 		--jse-text-color: #d4d4d4;
 
 		/* main, menu, modal */
-		--jse-main-border: 1px solid #4f4f4f;
+		--jse-main-border: 0px solid var(--color-action);
+		/* --jse-main-border: 1px solid #4f4f4f; */
 		--jse-menu-color: #fff;
 		--jse-modal-background: #2f2f2f;
+		/* --jse-modal-background: var(--color-dark-200); */
 		--jse-modal-overlay-background: rgba(0, 0, 0, 0.5);
 		--jse-modal-code-background: #2f2f2f;
+		/* --jse-modal-code-background: var(--color-dark-200); */
 
 		/* tooltip in text mode */
 		--jse-tooltip-color: var(--jse-text-color);
@@ -24,12 +40,16 @@
 
 		/* panels: navigation bar, gutter, search box */
 		--jse-panel-background: #333333;
-		--jse-panel-background-border: 1px solid #464646;
+		/* --jse-panel-background: var(--color-dark-200); */
+		--jse-panel-background-border: 0px solid #464646;
 		--jse-panel-color: var(--jse-text-color);
 		--jse-panel-color-readonly: #737373;
 		--jse-panel-border: 1px solid #3c3c3c;
 		--jse-panel-button-color-highlight: #e5e5e5;
+		/* --jse-panel-button-color-highlight: var(--color-dark-300); */
 		--jse-panel-button-background-highlight: #464646;
+		/* --jse-panel-button-background-highlight: var(--color-dark-300); */
+
 
 		/* navigation-bar */
 		--jse-navigation-bar-background: #656565;
@@ -37,7 +57,8 @@
 		--jse-navigation-bar-dropdown-color: var(--jse-text-color);
 
 		/* context menu */
-		--jse-context-menu-background: #4b4b4b;
+		/* --jse-context-menu-background: #4b4b4b; */
+		--jse-context-menu-background: var(--color-dark-200);
 		--jse-context-menu-background-highlight: #595959;
 		--jse-context-menu-separator-color: #595959;
 		--jse-context-menu-color: var(--jse-text-color);
@@ -92,14 +113,16 @@
 		--jse-button-color: #e0e0e0;
 		--jse-button-secondary-background: #494949;
 		--jse-button-secondary-background-highlight: #5d5d5d;
-		--jse-button-secondary-background-disabled: #9d9d9d;
+		--jse-button-secondary-background-disabled: #var(--color-dark-300);
+		/* --jse-button-secondary-background-disabled: #9d9d9d; */
 		--jse-button-secondary-color: var(--jse-text-color);
 		--jse-a-color: #55abff;
 		--jse-a-color-highlight: #4387c9;
 
 		/* svelte-select */
 		--background: #3d3d3d;
-		--border: 1px solid #4f4f4f;
+		/* --border: 1px solid #4f4f4f; */
+		--border: 1px solid var(--color-action);
 		--list-background: #3d3d3d;
 		--item-hover-bg: #505050;
 		--multi-item-bg: #5b5b5b;
