@@ -53,30 +53,29 @@
 
 	onMount(() => {
 		stores.forEach((s) => registerStore(s.name, s.store, null));
+	});
 
-		let unsubscribeRegisteredStores = RegisteredStores.subscribe((registered) => {
-			// Subscribe to each store so that they update the history array
-			unsubscribeArr = Object.entries(registered).map(([key, keyValue]) => {
-				return keyValue.store.subscribe((v) => {
-					// Only regisster to history if we're not in rewind mode
-					if (!$StoreToolsState.rewindMode) {
-						registered[keyValue.name].history.set([
+	function subscribeStores() {
+		unsubscribeArr.forEach((v) => v());
+		unsubscribeArr = Object.entries($RegisteredStores).map(([key, keyValue]) => {
+			return keyValue.store.subscribe((v) => {
+				// Only regisster to history if we're not in rewind mode
+				if (!$StoreToolsState.rewindMode) {
+					const test = get($RegisteredStores[keyValue.name].history);
+					if (JSON.stringify(test[0]?.data) != JSON.stringify(v)) {
+						$RegisteredStores[keyValue.name].history.set([
 							{
 								timestamp: new Date(),
 								data: JSON.parse(JSON.stringify(v))
 							},
-							...get(registered[keyValue.name].history)
+							...get($RegisteredStores[keyValue.name].history)
 						]);
 					}
-					return v;
-				});
+				}
+				return v;
 			});
-
-			return registered;
 		});
-
-		return unsubscribeRegisteredStores;
-	});
+	}
 
 	function activateStore(key) {
 		activeStoreKey = key;
@@ -112,6 +111,7 @@
 	});
 
 	$: console.log({ $RegisteredStores });
+	$: $RegisteredStores, subscribeStores();
 	$: $RegisteredStores[activeStoreKey]?.history, console.log('history updated');
 </script>
 

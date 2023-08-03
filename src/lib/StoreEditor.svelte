@@ -32,10 +32,14 @@
 
 	async function handleChange(updatedContent, previousContent, { contentErrors, patchResult }) {
 		// content is an object { json: JSONValue } | { text: string }
+		console.log({ updatedContent });
 
 		let storeObj = {};
 		if (updatedContent.text) {
 			storeObj = JSON.parse(updatedContent.text);
+		}
+		if (updatedContent.json) {
+			storeObj = updatedContent.json;
 		}
 
 		storeObjText = JSON.stringify(storeObj);
@@ -54,7 +58,7 @@
 	<JSONEditor
 		content={editorContent}
 		onChange={(...args) => handleChange(...args)}
-		mode="text"
-		mainMenuBar={true}
+		mode="tree"
+		mainMenuBar={false}
 	/>
 {/key}
