@@ -1,1 +1,0 @@
-{"filename":"/home/kaashin/kaashin-labs/svelte-preprocess/src/lib/Component.svelte","filepath":"/home/kaashin/kaashin-labs/svelte-preprocess/src/lib","component":"Component","props":[{"name":"color","type":"string","typeDescription":"This modifies the color"},{"name":"loading","type":"boolean","typeDescription":null},{"name":"noType","type":"","typeDescription":""}]}

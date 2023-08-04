@@ -1,35 +1,17 @@
 {
-	"name": "svelte-preprocess",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
-		"test": "vitest",
-		"lint": "prettier --plugin-search-dir . --check .",
-		"format": "prettier --plugin-search-dir . --write ."
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/kit": "^1.20.4",
-		"doctrine": "^3.0.0",
-		"prettier": "^2.8.0",
-		"prettier-plugin-svelte": "^2.10.1",
-		"sass": "^1.64.2",
-		"svelte": "^4.0.5",
-		"svelte-check": "^3.4.3",
-		"svelte-preprocess-sass": "^2.0.1",
-		"svelte-sequential-preprocessor": "^2.0.1",
-		"typescript": "^5.0.0",
-		"vite": "^4.4.2",
-		"vitest": "^0.32.2"
-	},
-	"type": "module",
-	"dependencies": {
-		"magic-string": "^0.30.2",
-		"svelte-jsoneditor": "^0.17.8"
-	}
+  "name": "@polarforge",
+  "version": "0.0.1",
+  "description": "Devtools for Polar Forge",
+  "scripts": {
+    "docs:dev": "concurrently -n DOCS,UNLOG -c cyan,green \"pnpm run docs:server\" \"pnpm run unlog:package-watch\"",
+    "docs:server": "cd apps/docs && pnpm run dev",
+    "unlog:dev": "concurrently -n SERVER,PACKAGE -c cyan,green \"pnpm run unlog:dev-server\" \"pnpm run unlog:package-watch\"",
+    "unlog:dev-server": "cd packages/unlog && pnpm run dev",
+    "unlog:package-watch": "cd packages/unlog && pnpm run package:watch"
+  },
+  "author": "Richard Lee",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
 }
