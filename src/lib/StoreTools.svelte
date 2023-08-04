@@ -144,9 +144,12 @@
 		--padding-tight: 0.25rem;
 		--color-dark-100: #0b132b;
 		--color-action: #5bc0be;
+		--color-action-light: #88c2c1;
 		--color-text: #ffffff;
+
 		--color-dark-200: #1c2541;
 		--color-dark-300: #3a506b;
+		--color-dark-400: #607794;
 
 		--shadow-color: 0deg 0% 55%;
 		--shadow-elevation-low: -0.1px 0.5px 0.6px hsl(var(--shadow-color) / 0.29),
@@ -217,7 +220,7 @@
 		background-color: var(--color-dark-100);
 		color: var(--color-text);
 		visibility: hidden;
-		font-size: 14px;
+		font-size: 12px;
 		font-family: 'Segoe UI Mono', 'Liberation Mono', Menlo, Monaco, Consolas, monospace;
 	}
 
@@ -244,7 +247,7 @@
 	}
 
 	.active {
-		background-color: var(--color-action);
+		border: solid 1px var(--color-action);
 	}
 </style>
 

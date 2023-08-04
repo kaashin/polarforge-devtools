@@ -14,7 +14,7 @@
 
 <style lang="scss">
 	.active {
-		background-color: var(--color-action);
+		border: 1px solid var(--color-action);
 	}
 
 	.header {
