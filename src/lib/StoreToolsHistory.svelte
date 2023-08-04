@@ -26,6 +26,13 @@
 			display: flex;
 			flex-direction: row;
 			gap: 0.2rem;
+			align-items: center;
+
+			& > .navigation-button {
+				&:hover {
+					color: var(--color-action);
+				}
+			}
 		}
 	}
 
@@ -38,7 +45,7 @@
 
 	.list-item {
 		padding: var(--padding-tight);
-		cursor: pointer;
+		cursor: default;
 
 		&:hover:not(.active) {
 			background-color: var(--color-dark-200);
@@ -51,6 +58,7 @@
 		<h3>History</h3>
 		<div class="navigation">
 			<span
+				class="navigation-button"
 				on:click={() => {
 					if (activeHistoryIndex > 0) {
 						activeHistoryIndex = activeHistoryIndex - 1;
@@ -61,6 +69,7 @@
 				<ArrowLeft />
 			</span>
 			<span
+				class="navigation-button"
 				on:click={() => {
 					if (activeHistoryIndex < $history.length - 1) {
 						activeHistoryIndex = activeHistoryIndex + 1;

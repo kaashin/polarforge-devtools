@@ -239,10 +239,18 @@
 	.store-list-item {
 		width: 100%;
 		padding: var(--padding-tight);
-		cursor: pointer;
+		cursor: default;
 
 		&:hover {
 			background-color: var(--color-dark-200);
+		}
+	}
+
+	.collapse-button {
+		cursor: pointer;
+
+		&:hover {
+			color: var(--color-action);
 		}
 	}
 
@@ -261,7 +269,7 @@
 		>
 			<div class="header text-semibold">
 				<div>Unlog</div>
-				<div style:cursor="pointer" on:click={minimize}>
+				<div class="collapse-button" on:click={minimize}>
 					<ChevronDoubleDown />
 				</div>
 			</div>
