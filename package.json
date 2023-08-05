@@ -1,5 +1,5 @@
 {
-  "name": "@polarforge",
+  "name": "@polarforge/devtools",
   "version": "0.0.1",
   "description": "Devtools for Polar Forge",
   "scripts": {
