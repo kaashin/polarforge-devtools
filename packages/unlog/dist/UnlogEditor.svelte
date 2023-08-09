@@ -1,6 +1,6 @@
 <script>
 	import { writable } from 'svelte/store';
-	import { UnlogStores, registerStore } from './unlogUtils.js';
+	import { UnlogStores, registerStore } from './unlogUtils';
 	import { beforeUpdate, onDestroy, onMount } from 'svelte';
 	import { JSONEditor } from 'svelte-jsoneditor';
 

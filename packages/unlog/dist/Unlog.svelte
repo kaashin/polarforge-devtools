@@ -200,7 +200,6 @@
 	:global(.unlog .p-2) {
 		padding: 0.5rem;
 	}
-
 	.unlog-trigger {
 		padding: var(--padding-container);
 		position: absolute;
@@ -221,10 +220,10 @@
 	}
 
 	.container {
-		position: fixed;
+		position: absolute;
 		bottom: 0;
 		right: 0;
-		width: 100vw;
+		min-width: 100vw;
 		height: 400px;
 		display: grid;
 		grid-template-columns: var(--column-one-width) var(--column-two-width) 1fr;

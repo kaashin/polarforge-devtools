@@ -31,7 +31,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@polarforge/unlog": "workspace:^",
-		"matter-js": "^0.19.0"
+		"@polarforge/unlog": "workspace:^"
 	}
 }

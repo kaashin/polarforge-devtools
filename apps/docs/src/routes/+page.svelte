@@ -1,53 +1,34 @@
 <script>
-	import Unlog from '@polarforge/unlog';
+	import { ExampleModal } from '$lib/Stores';
+	import { registerStore } from '@polarforge/unlog';
 	import { writable } from 'svelte/store';
 
-	import Matter from 'matter-js';
-	import { onMount } from 'svelte';
-
-	let canvasEl;
-
-	let { Engine, Render, Runner, Bodies, Composite } = Matter;
-
-	onMount(() => {
-		let engine = Engine.create();
-
-		console.log({ canvasEl });
-		let canvasWidth = canvasEl.scrollWidth;
-		let canvasHeight = canvasEl.scrollHeight;
-
-		let render = Render.create({
-			canvas: canvasEl,
-			engine: engine,
-			options: {
-				width: canvasWidth,
-				height: canvasHeight,
-				wireframes: false,
-				pixelRatio: 1
-			}
-		});
-
-		let boxA = Bodies.rectangle(400, 200, 80, 80);
-		let boxB = Bodies.rectangle(450, 50, 80, 80);
-		let ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
-
-		Composite.add(engine.world, [boxA, boxB, ground]);
-
-		Render.run(render);
-
-		let runner = Runner.create();
-
-		Runner.run(runner, engine);
-	});
-
-	const TestStore = writable(5);
+	const newStore = writable(5);
+	// registerStore('Local store', newStore, 'page.svelte');
 </script>
 
 <style>
+	.inline-code {
+		@apply px-1 py-0 bg-gray-700 border border-dashed border-gray-400 rounded-sm text-sm;
+	}
 </style>
 
-<!-- {$TestStore} -->
-
-<canvas style:width="100vw" style:height="100vh" bind:this={canvasEl} />
-
-<Unlog stores={[{ name: 'Test', store: TestStore }]} enable={import.meta.env.DEV} />
+<div class="w-full flex flex-col items-center p-10 gap-4">
+	<h1 class="text-3xl font-bold">Svelte-unlog</h1>
+	<p class="max-w-xl p-4">
+		Reduce the amount of <span class="inline-code">console.log()</span> required to debug. Access your
+		stores and alter the values in a dev tool panel.
+	</p>
+	<div class="bg-gray-800 w-120 rounded-lg shadow-xl border-gray-700 border">
+		<div class="px-3 py-2 border-b border-gray-700">
+			<p class="">{$ExampleModal.title}</p>
+		</div>
+		<div class="p-3">
+			<ul class="flex flex-col gap-2 text-sm">
+				{#each $ExampleModal.steps as step}
+					<li class="bg-gray-900 px-3 py-2 rounded-lg">{step.instruction}</li>
+				{/each}
+			</ul>
+		</div>
+	</div>
+</div>
