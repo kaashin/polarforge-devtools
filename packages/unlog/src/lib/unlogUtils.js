@@ -6,7 +6,7 @@ export function registerStore(name, store, source) {
     UnlogStores.update((s) => {
       let entryName = name;
 
-      s = {
+      return {
         ...s,
         [entryName]: {
           name: entryName,
@@ -15,8 +15,6 @@ export function registerStore(name, store, source) {
           history: writable([])
         }
       };
-
-      return s;
     });
   }
 }

@@ -1,7 +1,6 @@
 <script>
 	import { writable } from 'svelte/store';
-	import { UnlogStores, registerStore } from './unlogUtils';
-	import { beforeUpdate, onDestroy, onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { JSONEditor } from 'svelte-jsoneditor';
 
 	export let store = writable({});
@@ -23,7 +22,7 @@
 		storeObjText = '';
 
 		if ($store) {
-			console.log('update editor content');
+			// console.log('update editor content');
 			editorContent = {
 				json: $store
 			};
@@ -32,7 +31,7 @@
 
 	async function handleChange(updatedContent, previousContent, { contentErrors, patchResult }) {
 		// content is an object { json: JSONValue } | { text: string }
-		console.log({ updatedContent });
+		// console.log({ updatedContent });
 
 		let storeObj = {};
 		if (updatedContent.text) {

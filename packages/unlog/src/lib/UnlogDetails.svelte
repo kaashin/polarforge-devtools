@@ -1,7 +1,5 @@
 <script>
 	import { UnlogStores, ActiveStoreKey } from './unlogUtils.js';
-
-	$: console.log($UnlogStores[$ActiveStoreKey]);
 </script>
 
 <style lang="scss">

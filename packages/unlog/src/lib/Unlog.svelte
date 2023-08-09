@@ -1,51 +1,8 @@
-<!-- 
-	// import { writable, get } from 'svelte/store';
-
-	// export function registerStore(name, store, source) {
-	// 	// check if the store is actually a store
-	// 	if (store.subscribe && typeof store.subscribe === 'function') {
-	// 		UnlogStores.update((s) => {
-	// 			let entryName = name;
-
-	// 			s = {
-	// 				...s,
-	// 				[entryName]: {
-	// 					name: entryName,
-	// 					store: store,
-	// 					source: source,
-	// 					history: writable([])
-	// 				}
-	// 			};
-
-	// 			return s;
-	// 		});
-	// 	}
-	// }
-
-	// export const ActiveStoreKey = (() => {
-	// 	const store = writable('');
-	// 	return { ...store };
-	// })();
-
-	// export const UnlogStores = (() => {
-	// 	const store = writable({});
-
-	// 	return { ...store };
-	// })();
-
-	// export const UnlogState = (() => {
-	// 	const store = writable({
-	// 		rewindMode: false
-	// 	});
-	// 	return { ...store };
-	// })(); -->
-
 <script>
 	import { onDestroy, onMount } from 'svelte';
 	import { writable, get } from 'svelte/store';
 	import StoreEditor from './UnlogEditor.svelte';
 	import UnlogHistory from './UnlogHistory.svelte';
-	import UnlogDetails from './UnlogDetails.svelte';
 	import UnlogCss from './UnlogCss.svelte';
 	import ChevronDoubleDown from './icons/ChevronDoubleDown.svelte';
 	import UnlogIcon from './icons/UnlogIcon.svelte';
@@ -68,7 +25,6 @@
 	export let stores = [];
 
 	// The active store for the editor
-	let activeStoreKey = '';
 	let activeHistoryIndex = 0;
 	let unsubscribeArr = [];
 	let historyCount = 0;
@@ -101,7 +57,6 @@
 	}
 
 	function activateStore(key) {
-		// activeStoreKey = key;
 		$ActiveStoreKey = key;
 		activeHistoryIndex = 0;
 		$UnlogStores[$ActiveStoreKey].store.set(
@@ -112,7 +67,7 @@
 	}
 
 	function activateHistoryIndex(index) {
-		const historyValues = get($UnlogStores[$ActiveStoreKey].history);
+		let historyValues = get($UnlogStores[$ActiveStoreKey].history);
 		// if index is not zero, we are looking at historical entry
 		if (index === 0) {
 			$UnlogStores[$ActiveStoreKey].store.set(historyValues[index].data);
@@ -143,7 +98,7 @@
 	});
 
 	$: $UnlogStores, subscribeStores();
-	$: $UnlogStores[$ActiveStoreKey]?.history, console.log('history updated');
+	// $: $UnlogStores[$ActiveStoreKey]?.history, console.log('history updated');
 </script>
 
 <style lang="scss">
@@ -279,7 +234,13 @@
 		>
 			<div class="header text-semibold">
 				<div>Unlog</div>
-				<div class="collapse-button" on:click={minimize}>
+				<div
+					class="collapse-button"
+					role="button"
+					tabindex="0"
+					on:click={minimize}
+					on:keydown={minimize}
+				>
 					<ChevronDoubleDown />
 				</div>
 			</div>
@@ -289,7 +250,12 @@
 					<div
 						class="store-list-item"
 						class:active={storeKey === $ActiveStoreKey}
+						role="link"
+						tabindex="0"
 						on:click={() => {
+							activateStore(storeKey);
+						}}
+						on:keydown={() => {
 							activateStore(storeKey);
 						}}
 					>
@@ -319,7 +285,13 @@
 			</div>
 		</div>
 		{#if !$open}
-			<div class="unlog-trigger" on:click={openUnlog}>
+			<div
+				class="unlog-trigger"
+				role="button"
+				tabindex="0"
+				on:click={openUnlog}
+				on:keydown={openUnlog}
+			>
 				<UnlogIcon width="2rem" height="2rem" />
 			</div>
 		{/if}
