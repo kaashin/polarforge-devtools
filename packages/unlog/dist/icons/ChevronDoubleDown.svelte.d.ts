@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  ChevronDoubleDownProps */
 /** @typedef {typeof __propDef.events}  ChevronDoubleDownEvents */
 /** @typedef {typeof __propDef.slots}  ChevronDoubleDownSlots */
-export default class ChevronDoubleDown extends SvelteComponent<{
+export default class ChevronDoubleDown extends SvelteComponentTyped<{
     width?: string | undefined;
     height?: string | undefined;
 }, {
@@ -11,7 +11,7 @@ export default class ChevronDoubleDown extends SvelteComponent<{
 export type ChevronDoubleDownProps = typeof __propDef.props;
 export type ChevronDoubleDownEvents = typeof __propDef.events;
 export type ChevronDoubleDownSlots = typeof __propDef.slots;
-import { SvelteComponent } from "svelte";
+import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         width?: string | undefined;

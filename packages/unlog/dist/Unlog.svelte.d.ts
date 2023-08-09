@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  UnlogProps */
 /** @typedef {typeof __propDef.events}  UnlogEvents */
 /** @typedef {typeof __propDef.slots}  UnlogSlots */
-export default class Unlog extends SvelteComponent<{
+export default class Unlog extends SvelteComponentTyped<{
     enable?: boolean | undefined;
     stores?: {
         name: string;
@@ -15,7 +15,7 @@ export default class Unlog extends SvelteComponent<{
 export type UnlogProps = typeof __propDef.props;
 export type UnlogEvents = typeof __propDef.events;
 export type UnlogSlots = typeof __propDef.slots;
-import { SvelteComponent } from "svelte";
+import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         enable?: boolean | undefined;

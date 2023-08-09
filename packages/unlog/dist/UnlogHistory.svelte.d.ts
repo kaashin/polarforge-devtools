@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  UnlogHistoryProps */
 /** @typedef {typeof __propDef.events}  UnlogHistoryEvents */
 /** @typedef {typeof __propDef.slots}  UnlogHistorySlots */
-export default class UnlogHistory extends SvelteComponent<{
+export default class UnlogHistory extends SvelteComponentTyped<{
     history?: any;
     activeHistoryIndex?: number | undefined;
 }, {
@@ -14,7 +14,7 @@ export default class UnlogHistory extends SvelteComponent<{
 export type UnlogHistoryProps = typeof __propDef.props;
 export type UnlogHistoryEvents = typeof __propDef.events;
 export type UnlogHistorySlots = typeof __propDef.slots;
-import { SvelteComponent } from "svelte";
+import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         history?: any;

@@ -1,7 +1,6 @@
 {
-	"name": "@polarforge/unlog",
-	"version": "0.0.1",
-	"private": true,
+	"name": "svelte-unlog",
+	"version": "0.0.4",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -29,7 +28,7 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"svelte": "^4.0.0"
+		"svelte": "^3.0.0"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -41,7 +40,7 @@
 		"prettier-plugin-svelte": "^2.10.1",
 		"publint": "^0.1.9",
 		"sass": "^1.64.2",
-		"svelte": "^4.0.5",
+		"svelte": "^3.0.0",
 		"svelte-check": "^3.4.3",
 		"svelte-preprocess-sass": "^2.0.1",
 		"svelte-sequential-preprocessor": "^2.0.1",

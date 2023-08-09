@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  UnlogDetailsProps */
 /** @typedef {typeof __propDef.events}  UnlogDetailsEvents */
 /** @typedef {typeof __propDef.slots}  UnlogDetailsSlots */
-export default class UnlogDetails extends SvelteComponent<{
+export default class UnlogDetails extends SvelteComponentTyped<{
     [x: string]: never;
 }, {
     [evt: string]: CustomEvent<any>;
@@ -10,7 +10,7 @@ export default class UnlogDetails extends SvelteComponent<{
 export type UnlogDetailsProps = typeof __propDef.props;
 export type UnlogDetailsEvents = typeof __propDef.events;
 export type UnlogDetailsSlots = typeof __propDef.slots;
-import { SvelteComponent } from "svelte";
+import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: never;
