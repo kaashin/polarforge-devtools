@@ -162,7 +162,7 @@
 	}
 	.unlog-trigger {
 		padding: var(--padding-container);
-		position: absolute;
+		position: fixed;
 		bottom: 2rem;
 		left: 1rem;
 		background-color: var(--color-dark-100);
