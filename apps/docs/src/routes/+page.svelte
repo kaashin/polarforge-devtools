@@ -72,7 +72,10 @@
 	<section class="flex flex-col gap-2">
 		<h2 class="text-2xl font-bold">Known issues</h2>
 		<ul class="list-disc ml-4">
-			<li>Will not work in a rollup project that is set to build as a IIFE</li>
+			<li>
+				Will not work in a rollup project that is set to build as a IIFE. It wiil have challenges
+				with the svelte-jsoneditor dependency.
+			</li>
 		</ul>
 	</section>
 </div>
