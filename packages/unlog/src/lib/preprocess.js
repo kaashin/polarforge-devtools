@@ -7,6 +7,7 @@ import path from 'path';
 const ignoreFiles = [
   'Unlog.svelte',
   'UnlogEditor.svelte',
+  'UnlogCss.svelte',
   'UnlogHistory.svelte',
   'UnlogDetails.svelte',
 ]

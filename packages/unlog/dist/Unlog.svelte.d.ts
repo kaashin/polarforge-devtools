@@ -8,6 +8,7 @@ export default class Unlog extends SvelteComponentTyped<{
         store: object;
         source?: string | undefined;
     }[] | undefined;
+    initialOpen?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -24,6 +25,7 @@ declare const __propDef: {
             store: object;
             source?: string | undefined;
         }[] | undefined;
+        initialOpen?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

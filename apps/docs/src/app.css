@@ -5,3 +5,7 @@
 body, html {
   color: #fff;
 }
+
+.hljs {
+  @apply rounded-xl
+}

@@ -24,11 +24,16 @@
 	 */
 	export let stores = [];
 
+	/**
+	 * @type {boolean}
+	 */
+	export let initialOpen = false;
+
 	// The active store for the editor
 	let activeHistoryIndex = 0;
 	let unsubscribeArr = [];
 	let historyCount = 0;
-	let open = writable(true);
+	let open = writable(initialOpen);
 
 	onMount(() => {
 		stores.forEach((s) => registerStore(s.name, s.store, null));
@@ -175,10 +180,10 @@
 	}
 
 	.container {
-		position: absolute;
+		position: fixed;
 		bottom: 0;
 		right: 0;
-		min-width: 100vw;
+		min-width: 100%;
 		height: 400px;
 		display: grid;
 		grid-template-columns: var(--column-one-width) var(--column-two-width) 1fr;

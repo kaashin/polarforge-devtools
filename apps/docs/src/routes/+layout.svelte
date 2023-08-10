@@ -8,10 +8,6 @@
 
 <style>
 	:global(body) {
-		width: 100vw;
-		height: 100vh;
-	}
-	.main {
 		background-image: linear-gradient(
 			to right top,
 			#3c516d,
@@ -27,6 +23,7 @@
 			#176b6e,
 			#276f6a
 		);
+		background-attachment: fixed;
 	}
 </style>
 
