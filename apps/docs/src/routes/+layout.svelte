@@ -1,5 +1,5 @@
 <script>
-	import Unlog from '@polarforge/unlog';
+	import { Unlog } from 'svelte-unlog';
 	import { writable } from 'svelte/store';
 	import { ExampleModal } from '$lib/Stores';
 

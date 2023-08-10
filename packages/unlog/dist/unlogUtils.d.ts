@@ -1,14 +1,13 @@
-/// <reference types="svelte" />
 export function registerStore(name: any, store: any, source: any): void;
 export const ActiveStoreKey: {
     set(this: void, value: string): void;
     update(this: void, updater: import("svelte/store").Updater<string>): void;
-    subscribe(this: void, run: import("svelte/store").Subscriber<string>, invalidate?: import("svelte/store").Invalidator<string> | undefined): import("svelte/store").Unsubscriber;
+    subscribe(this: void, run: import("svelte/store").Subscriber<string>, invalidate?: ((value?: string | undefined) => void) | undefined): import("svelte/store").Unsubscriber;
 };
 export const UnlogStores: {
     set(this: void, value: {}): void;
     update(this: void, updater: import("svelte/store").Updater<{}>): void;
-    subscribe(this: void, run: import("svelte/store").Subscriber<{}>, invalidate?: import("svelte/store").Invalidator<{}> | undefined): import("svelte/store").Unsubscriber;
+    subscribe(this: void, run: import("svelte/store").Subscriber<{}>, invalidate?: ((value?: {} | undefined) => void) | undefined): import("svelte/store").Unsubscriber;
 };
 export const UnlogState: {
     set(this: void, value: {
@@ -19,7 +18,7 @@ export const UnlogState: {
     }>): void;
     subscribe(this: void, run: import("svelte/store").Subscriber<{
         rewindMode: boolean;
-    }>, invalidate?: import("svelte/store").Invalidator<{
+    }>, invalidate?: ((value?: {
         rewindMode: boolean;
-    }> | undefined): import("svelte/store").Unsubscriber;
+    } | undefined) => void) | undefined): import("svelte/store").Unsubscriber;
 };

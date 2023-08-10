@@ -2,7 +2,7 @@
 	import { UnlogStores, ActiveStoreKey } from './unlogUtils.js';
 </script>
 
-<style>
+<style lang="scss">
 	.container {
 		display: flex;
 		flex-direction: column;

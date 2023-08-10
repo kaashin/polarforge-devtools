@@ -13,7 +13,7 @@
 	$: $history, dispatch('update', $history.length);
 </script>
 
-<style>
+<style lang="scss">
 	.active {
 		border: 1px solid var(--color-action);
 	}

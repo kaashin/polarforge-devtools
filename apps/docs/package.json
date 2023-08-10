@@ -31,6 +31,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@polarforge/unlog": "workspace:^"
+		"svelte-unlog": "workspace:^"
 	}
 }

@@ -1,6 +1,6 @@
 <script>
 	import { ExampleModal } from '$lib/Stores';
-	import { registerStore } from '@polarforge/unlog';
+	import { registerStore } from 'svelte-unlog';
 	import { writable } from 'svelte/store';
 
 	const newStore = writable(5);

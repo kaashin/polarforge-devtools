@@ -101,7 +101,7 @@
 	// $: $UnlogStores[$ActiveStoreKey]?.history, console.log('history updated');
 </script>
 
-<style>
+<style lang="scss">
 	:global(.unlog *, *::before, *::after) {
 		box-sizing: border-box;
 		margin: 0;
