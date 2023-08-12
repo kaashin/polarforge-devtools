@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+	import { writable } from 'svelte/store';
 	import ArrowLeft from './icons/ArrowLeft.svelte';
 	import ArrowRight from './icons/ArrowRight.svelte';
 
@@ -57,7 +58,15 @@
 		<div class="navigation">
 			<span
 				class="navigation-button"
+				role="button"
+				tabindex="0"
 				on:click={() => {
+					if (activeHistoryIndex > 0) {
+						activeHistoryIndex = activeHistoryIndex - 1;
+						dispatch('select', activeHistoryIndex);
+					}
+				}}
+				on:keydown={() => {
 					if (activeHistoryIndex > 0) {
 						activeHistoryIndex = activeHistoryIndex - 1;
 						dispatch('select', activeHistoryIndex);
@@ -68,7 +77,15 @@
 			</span>
 			<span
 				class="navigation-button"
+				role="button"
+				tabindex="0"
 				on:click={() => {
+					if (activeHistoryIndex < $history.length - 1) {
+						activeHistoryIndex = activeHistoryIndex + 1;
+						dispatch('select', activeHistoryIndex);
+					}
+				}}
+				on:keydown={() => {
 					if (activeHistoryIndex < $history.length - 1) {
 						activeHistoryIndex = activeHistoryIndex + 1;
 						dispatch('select', activeHistoryIndex);
@@ -83,7 +100,12 @@
 		<div
 			class="list-item"
 			class:active={index === activeHistoryIndex}
+			role="link"
+			tabindex="0"
 			on:click={() => {
+				dispatch('select', index);
+			}}
+			on:keydown={() => {
 				dispatch('select', index);
 			}}
 		>

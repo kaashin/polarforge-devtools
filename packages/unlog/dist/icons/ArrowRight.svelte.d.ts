@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  ArrowRightProps */
 /** @typedef {typeof __propDef.events}  ArrowRightEvents */
 /** @typedef {typeof __propDef.slots}  ArrowRightSlots */
-export default class ArrowRight extends SvelteComponent<{
+export default class ArrowRight extends SvelteComponentTyped<{
     width?: string | undefined;
     height?: string | undefined;
 }, {
@@ -11,7 +11,7 @@ export default class ArrowRight extends SvelteComponent<{
 export type ArrowRightProps = typeof __propDef.props;
 export type ArrowRightEvents = typeof __propDef.events;
 export type ArrowRightSlots = typeof __propDef.slots;
-import { SvelteComponent } from "svelte";
+import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         width?: string | undefined;

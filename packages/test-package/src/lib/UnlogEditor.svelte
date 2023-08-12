@@ -1,6 +1,6 @@
 <script>
 	import { writable } from 'svelte/store';
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { JSONEditor } from 'svelte-jsoneditor';
 
 	export let store = writable({});
@@ -15,8 +15,6 @@
 
 	let storeObjText = '';
 	let editorContent = { json: {} };
-	let editorEl;
-	let editor;
 
 	let storeUnsubscribe = () => {};
 
@@ -48,8 +46,6 @@
 		$store = storeObj;
 	}
 
-	onMount(() => {});
-
 	onDestroy(() => {
 		storeUnsubscribe();
 	});
@@ -58,7 +54,6 @@
 </script>
 
 {#key store || $history}
-	<!-- <div bind:this={editorEl} style="width:100%; height: 100%; border: solid 1px red">test</div> -->
 	<JSONEditor
 		content={editorContent}
 		onChange={(...args) => handleChange(...args)}

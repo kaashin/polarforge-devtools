@@ -24,16 +24,11 @@
 	 */
 	export let stores = [];
 
-	/**
-	 * @type {boolean}
-	 */
-	export let initialOpen = false;
-
 	// The active store for the editor
 	let activeHistoryIndex = 0;
 	let unsubscribeArr = [];
 	let historyCount = 0;
-	let open = writable(initialOpen);
+	let open = writable(true);
 
 	onMount(() => {
 		stores.forEach((s) => registerStore(s.name, s.store, null));
@@ -106,7 +101,7 @@
 	// $: $UnlogStores[$ActiveStoreKey]?.history, console.log('history updated');
 </script>
 
-<style>
+<style lang="scss">
 	:global(.unlog *, *::before, *::after) {
 		box-sizing: border-box;
 		margin: 0;
@@ -162,7 +157,7 @@
 	}
 	.unlog-trigger {
 		padding: var(--padding-container);
-		position: fixed;
+		position: absolute;
 		bottom: 2rem;
 		left: 1rem;
 		background-color: var(--color-dark-100);
@@ -180,10 +175,10 @@
 	}
 
 	.container {
-		position: fixed;
+		position: absolute;
 		bottom: 0;
 		right: 0;
-		min-width: 100%;
+		min-width: 100vw;
 		height: 400px;
 		display: grid;
 		grid-template-columns: var(--column-one-width) var(--column-two-width) 1fr;

@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  UnlogEditorProps */
 /** @typedef {typeof __propDef.events}  UnlogEditorEvents */
 /** @typedef {typeof __propDef.slots}  UnlogEditorSlots */
-export default class UnlogEditor extends SvelteComponent<{
+export default class UnlogEditor extends SvelteComponentTyped<{
     store?: import("svelte/store").Writable<{}> | undefined;
     activeStoreKey?: string | undefined;
     contentOverride?: null | undefined;
@@ -17,7 +17,7 @@ export default class UnlogEditor extends SvelteComponent<{
 export type UnlogEditorProps = typeof __propDef.props;
 export type UnlogEditorEvents = typeof __propDef.events;
 export type UnlogEditorSlots = typeof __propDef.slots;
-import { SvelteComponent } from "svelte";
+import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         store?: import("svelte/store").Writable<{}> | undefined;
