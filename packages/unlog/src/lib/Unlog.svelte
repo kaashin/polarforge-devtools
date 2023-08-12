@@ -180,13 +180,16 @@
 		--color-action: #5bc0be;
 		--color-action-light: #88c2c1;
 		--color-text: #ffffff;
+		--color-text-code-value: #d67220;
 
 		--color-dark-100: #0b132b;
 		--color-dark-200: #1c2541;
 		--color-dark-300: #3a506b;
 		--color-dark-400: #607794;
 
+		--input-active-border-color: var(--color-action);
 		--editor-row-hover-bg: var(--color-dark-200);
+		--editor-value-color: var(--color-text-code-value)
 
 		--shadow-color: 0deg 0% 55%;
 		--shadow-elevation-low: -0.1px 0.5px 0.6px hsl(var(--shadow-color) / 0.29),

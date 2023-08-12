@@ -41,18 +41,17 @@
 	input {
 		background-color: inherit;
 		border: 0;
-		color: rgb(79, 216, 226);
-		font-family: 'Lucida Console', Consolas, monospace;
+		color: var(--input-active-border-color);
 		line-height: 0.8em;
 		margin-top: -0.2em;
 	}
 
 	input:hover {
-		border-bottom: dotted 1px rgb(79, 216, 226);
+		border-bottom: dotted 1px var(--input-active-border-color);
 	}
 
 	input:focus {
-		outline: solid 1px rgb(79, 216, 226);
+		outline: solid 1px var(--input-active-border-color);
 		border: none;
 		padding: 0.3em;
 	}
@@ -66,21 +65,21 @@
 	}
 
 	select:focus {
-		outline: solid 1px rgb(79, 216, 226);
+		outline: solid 1px var(--input-active-border-color);
 		border: none;
 		padding: 0.3em;
 	}
 
 	[contenteditable] {
-		background-color: rgb(39, 39, 39);
+		background-color: var(--color-dark-100);
 		padding-left: 0.3em;
 	}
 	[contenteditable]:hover {
-		border-bottom: dotted 1px rgb(79, 216, 226);
+		border-bottom: dotted 1px var(--input-active-border-color);
 	}
 
 	[contenteditable]:focus {
-		outline: solid 1px rgb(79, 216, 226);
+		outline: solid 1px var(--input-active-border-color);
 		padding: 0.3em;
 	}
 
@@ -102,30 +101,27 @@
 	}
 
 	.value {
-		color: rgb(79, 216, 226);
+		color: var(--editor-value-color);
 	}
 
 	.highlight {
-		background-color: rgb(90, 90, 90);
-	}
-
-	.row-menu {
+		background-color: var(--editor-row-hover-bg);
 	}
 
 	.icon {
-		color: rgb(60, 60, 60);
+		color: var(--color-dark-300);
 		transition: all 0.1s;
 	}
 
 	.icon:hover {
-		color: rgb(79, 216, 226);
+		color: var(--color-active);
 	}
 </style>
 
 <div
 	class="row"
 	on:click={handleRowClicked}
-	on:mousedown={handleRowClicked}
+	on:keydown={handleRowClicked}
 	role="button"
 	tabindex="0"
 	class:highlight={allowHighlight && $EditorHighlightedRow === id}
@@ -164,7 +160,7 @@
 			<div
 				class="icon"
 				on:click={handleDelete}
-				on:mousedown={handleDelete}
+				on:keydown={handleDelete}
 				role="button"
 				tabindex="0"
 			>
