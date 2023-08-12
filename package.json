@@ -1,9 +1,9 @@
 {
-  "name": "@polarforge/devtools",
+  "name": "@polarforge/svelte-unlog",
   "version": "0.0.1",
   "description": "Devtools for Polar Forge",
   "scripts": {
-    "docs:dev": "concurrently -n DOCS,UNLOG -c cyan,green \"pnpm run docs:server\" \"pnpm run unlog:package-watch\"",
+    "docs:dev": "concurrently -n UNLOG,DOCS -c cyan,green \"pnpm run unlog:package-watch\" \"pnpm run docs:server\" ",
     "docs:server": "cd apps/docs && pnpm run dev",
     "unlog:dev": "concurrently -n SERVER,PACKAGE -c cyan,green \"pnpm run unlog:dev-server\" \"pnpm run unlog:package-watch\"",
     "unlog:dev-server": "cd packages/unlog && pnpm run dev",

@@ -2,6 +2,7 @@
 /** @typedef {typeof __propDef.events}  UnlogEvents */
 /** @typedef {typeof __propDef.slots}  UnlogSlots */
 export default class Unlog extends SvelteComponentTyped<{
+    height?: number | undefined;
     enable?: boolean | undefined;
     stores?: {
         name: string;
@@ -19,6 +20,7 @@ export type UnlogSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
+        height?: number | undefined;
         enable?: boolean | undefined;
         stores?: {
             name: string;

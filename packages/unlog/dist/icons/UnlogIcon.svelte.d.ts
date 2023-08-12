@@ -2,8 +2,8 @@
 /** @typedef {typeof __propDef.events}  UnlogIconEvents */
 /** @typedef {typeof __propDef.slots}  UnlogIconSlots */
 export default class UnlogIcon extends SvelteComponentTyped<{
-    width?: string | undefined;
     height?: string | undefined;
+    width?: string | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -14,8 +14,8 @@ export type UnlogIconSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        width?: string | undefined;
         height?: string | undefined;
+        width?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

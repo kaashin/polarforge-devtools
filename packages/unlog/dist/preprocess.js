@@ -10,6 +10,7 @@ const ignoreFiles = [
   'UnlogCss.svelte',
   'UnlogHistory.svelte',
   'UnlogDetails.svelte',
+  'UnlogEditor'
 ]
 
 const parseImportMap = (importMap) => {
@@ -98,7 +99,7 @@ export function kPreprocess() {
                   // console.log('INIT: ', node.init)
                   // Lets make sure we add the import
 
-                  addImport(addImportMap, '@polarforge/unlog', ["registerStore"])
+                  addImport(addImportMap, 'svelte-unlog', ["registerStore"])
 
                   // Register the store
                   markup.appendRight(node.end + 1, '\n' + `registerStore("${node.id?.name}", ${node.id?.name}, "${filename}")`)

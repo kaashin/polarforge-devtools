@@ -1,7 +1,7 @@
 <script>
 	import { writable } from 'svelte/store';
 	import { onMount, onDestroy } from 'svelte';
-	import { JSONEditor } from 'svelte-jsoneditor';
+	// import { JSONEditor } from 'svelte-jsoneditor';
 
 	export let store = writable({});
 	export let activeStoreKey = '';
@@ -59,10 +59,10 @@
 
 {#key store || $history}
 	<!-- <div bind:this={editorEl} style="width:100%; height: 100%; border: solid 1px red">test</div> -->
-	<JSONEditor
+	<!-- <JSONEditor
 		content={editorContent}
 		onChange={(...args) => handleChange(...args)}
 		mode="tree"
 		mainMenuBar={false}
-	/>
+	/> -->
 {/key}

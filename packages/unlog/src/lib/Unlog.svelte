@@ -1,12 +1,14 @@
 <script>
 	import { onDestroy, onMount } from 'svelte';
 	import { writable, get } from 'svelte/store';
-	import StoreEditor from './UnlogEditor.svelte';
+	// import StoreEditor from './UnlogEditor.svelte';
+	import StoreEditor from './UnlogEditor/Index.svelte';
 	import UnlogHistory from './UnlogHistory.svelte';
 	import UnlogCss from './UnlogCss.svelte';
 	import ChevronDoubleDown from './icons/ChevronDoubleDown.svelte';
 	import UnlogIcon from './icons/UnlogIcon.svelte';
 	import { registerStore, UnlogStores, UnlogState, ActiveStoreKey } from './unlogUtils';
+	import { evalDataType } from './UnlogEditor/unlogEditorUtils';
 
 	/**
 	 * @type {boolean}
@@ -29,6 +31,19 @@
 	 */
 	export let initialOpen = false;
 
+	/**
+	 * @type {number}
+	 */
+	export let height = 200;
+
+	let resizeHandle = {
+		isMouseDown: false,
+		isMouseDragging: false,
+		yStart: 0,
+		yDistance: 0,
+		prevHeight: height
+	};
+
 	// The active store for the editor
 	let activeHistoryIndex = 0;
 	let unsubscribeArr = [];
@@ -36,8 +51,41 @@
 	let open = writable(initialOpen);
 
 	onMount(() => {
+		// Register each store that is passed as a prop
 		stores.forEach((s) => registerStore(s.name, s.store, null));
+
+		const panelResizeListener = window.addEventListener('mouseup', () => {
+			resizeHandle.isMouseDown = false;
+			resizeHandle.isMouseDragging = false;
+			resizeHandle.prevHeight = resizeHandle.prevHeight - resizeHandle.yDistance;
+			resizeHandle.yDistance = 0;
+			window.removeEventListener('mousemove', resizeMouseMove);
+		});
+
+		return panelResizeListener;
 	});
+
+	function resizeMouseDown(e) {
+		resizeHandle.isMouseDown = true;
+		resizeHandle.yStart = e.clientY;
+
+		window.addEventListener('mousemove', resizeMouseMove);
+	}
+
+	function resizeMouseMove(e) {
+		// console.log('isMouseDown', resizeHandle.isMouseDown);
+		if (resizeHandle.isMouseDown) {
+			e.stopPropagation();
+			e.preventDefault();
+
+			resizeHandle.yDistance = e.pageY - resizeHandle.yStart;
+
+			const newHeight = resizeHandle.prevHeight - resizeHandle.yDistance;
+
+			// containerEl.style.height = `${newHeight}px`;
+			height = newHeight;
+		}
+	}
 
 	function subscribeStores() {
 		unsubscribeArr.forEach((v) => v());
@@ -47,13 +95,24 @@
 				if (!$UnlogState.rewindMode) {
 					const test = get($UnlogStores[keyValue.name].history);
 					if (JSON.stringify(test[0]?.data) != JSON.stringify(v)) {
-						$UnlogStores[keyValue.name].history.set([
-							{
-								timestamp: new Date(),
-								data: JSON.parse(JSON.stringify(v))
-							},
-							...get($UnlogStores[keyValue.name].history)
-						]);
+						// If the value is not an object or array, it can't be JSON parsed
+						if (evalDataType(v) !== 'object' && evalDataType(v) !== 'array') {
+							$UnlogStores[keyValue.name].history.set([
+								{
+									timestamp: new Date(),
+									data: v
+								},
+								...get($UnlogStores[keyValue.name].history)
+							]);
+						} else {
+							$UnlogStores[keyValue.name].history.set([
+								{
+									timestamp: new Date(),
+									data: JSON.parse(JSON.stringify(v))
+								},
+								...get($UnlogStores[keyValue.name].history)
+							]);
+						}
 					}
 				}
 				return v;
@@ -113,16 +172,21 @@
 		-webki-font-smoothing: antialiased;
 		line-height: 1.25;
 
+		--dev-panel-height: 200px;
+		--dev-panel-resize-handle-height: 10px;
+
 		--padding-container: 0.5rem;
 		--padding-tight: 0.25rem;
-		--color-dark-100: #0b132b;
 		--color-action: #5bc0be;
 		--color-action-light: #88c2c1;
 		--color-text: #ffffff;
 
+		--color-dark-100: #0b132b;
 		--color-dark-200: #1c2541;
 		--color-dark-300: #3a506b;
 		--color-dark-400: #607794;
+
+		--editor-row-hover-bg: var(--color-dark-200);
 
 		--shadow-color: 0deg 0% 55%;
 		--shadow-elevation-low: -0.1px 0.5px 0.6px hsl(var(--shadow-color) / 0.29),
@@ -179,12 +243,17 @@
 		background-color: var(--color-action);
 	}
 
+	.unlog {
+		z-index: 1000000;
+	}
+
 	.container {
 		position: fixed;
 		bottom: 0;
 		right: 0;
+		padding-top: var(--dev-panel-resize-handle-height);
 		min-width: 100%;
-		height: 400px;
+		height: var(--dev-panel-height);
 		display: grid;
 		grid-template-columns: var(--column-one-width) var(--column-two-width) 1fr;
 		grid-template-rows: 1.5rem 1fr;
@@ -227,16 +296,38 @@
 	.active {
 		border: solid 1px var(--color-action);
 	}
+
+	.unlog__resize-handler {
+		grid-column: 1 / -1;
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: var(--dev-panel-resize-handle-height);
+		transition: all 0.2s ease-in-out;
+		position: absolute;
+		top: 0;
+		border-bottom: solid 1px rgb(60, 60, 60);
+	}
+	.unlog__resize-handler:hover {
+		background-color: rgb(79, 216, 226);
+		cursor: row-resize;
+	}
 </style>
 
 {#if enable}
 	<div class="unlog">
 		<div
 			class="container"
+			style:--dev-panel-height={height + 'px'}
 			style:--column-one-width="200px"
 			style:--column-two-width="240px"
 			style:visibility={$open ? 'visible' : 'hidden'}
 		>
+			<div class="unlog__resize-handler" on:mousedown={resizeMouseDown} role="button" tabindex="0">
+				<div
+					style="width: 100px; height: 2px; border-top: solid 1px rgb(60,60,60); border-bottom: solid 1px rgb(60,60,60); margin: 0 auto;"
+				/>
+			</div>
 			<div class="header text-semibold">
 				<div>Unlog</div>
 				<div

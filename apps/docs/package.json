@@ -32,6 +32,6 @@
 	"type": "module",
 	"dependencies": {
 		"svelte-highlight": "^7.3.0",
-		"svelte-unlog": "workspace:^"
+		"svelte-unlog": "workspace:^0.0.20"
 	}
 }

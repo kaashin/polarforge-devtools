@@ -8,7 +8,7 @@
 	import 'svelte-highlight/styles/atom-one-dark.css';
 
 	const newStore = writable(5);
-	// registerStore('Local store', newStore, 'page.svelte');
+	registerStore('Value store', newStore, 'page.svelte');
 </script>
 
 <style>
