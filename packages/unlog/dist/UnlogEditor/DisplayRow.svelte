@@ -1,13 +1,16 @@
 <script>
 	import { uid } from 'uid';
-	// import { detailsHighlightRow } from './store.js';
+	import { createEventDispatcher } from 'svelte';
 	import { EditorHighlightedRow } from './unlogEditorUtils';
 	import Icon from './../icons/Icon.svelte';
 	import TrashIcon from './../icons/TrashIcon.svelte';
 
+	const dispatch = createEventDispatcher();
+
 	export let value = null;
 	export let key = '';
 	export let allowHighlight = true;
+	export let nodeLevel = 0;
 	export const allowDelete = false;
 	export let handleDelete = () => {};
 
@@ -18,6 +21,14 @@
 
 	function handleRowClicked() {
 		$EditorHighlightedRow = id;
+	}
+
+	function handleNumberChange(e) {
+		dispatch('change', e.target.value * 1);
+	}
+
+	function handleBooleanChange(e) {
+		dispatch('change', e.target.value);
 	}
 
 	$: if (initType && (value === null || value === undefined)) {
@@ -134,15 +145,15 @@
 	{#if $$props.value != null || $$props.value != undefined}
 		<span class="value">
 			{#if typeof value === 'number'}
-				<input bind:value type="number" />
+				<input bind:value type="number" on:change={handleNumberChange} />
 			{:else if typeof value === 'boolean'}
-				<select bind:value>
+				<select bind:value on:change={handleBooleanChange}>
 					<option value={true}>true</option>
 					<option value={false}>false</option>
 				</select>
 			{:else if typeof value === 'string'}
 				<!-- <input bind:value={value} type="text" /> -->
-				<span contenteditable bind:innerHTML={value} />
+				<span contenteditable bind:innerHTML={value} on:change />
 			{:else if typeof value === 'function'}
 				<span>Function</span>
 			{:else}

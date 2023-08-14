@@ -3,13 +3,13 @@
 /** @typedef {typeof __propDef.slots}  UnlogEditorSlots */
 export default class UnlogEditor extends SvelteComponentTyped<{
     store?: import("svelte/store").Writable<{}> | undefined;
-    history?: import("svelte/store").Writable<never[]> | undefined;
-    activeStoreKey?: string | undefined;
-    contentOverride?: null | undefined;
     content?: {
         text: string;
         json: string;
     } | undefined;
+    history?: import("svelte/store").Writable<never[]> | undefined;
+    activeStoreKey?: string | undefined;
+    contentOverride?: null | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -21,13 +21,13 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         store?: import("svelte/store").Writable<{}> | undefined;
-        history?: import("svelte/store").Writable<never[]> | undefined;
-        activeStoreKey?: string | undefined;
-        contentOverride?: null | undefined;
         content?: {
             text: string;
             json: string;
         } | undefined;
+        history?: import("svelte/store").Writable<never[]> | undefined;
+        activeStoreKey?: string | undefined;
+        contentOverride?: null | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

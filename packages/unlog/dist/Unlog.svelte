@@ -93,8 +93,11 @@
 			return keyValue.store.subscribe((v) => {
 				// Only regisster to history if we're not in rewind mode
 				if (!$UnlogState.rewindMode) {
+					console.log('keyValue', keyValue.name);
 					const test = get($UnlogStores[keyValue.name].history);
+					console.log({ test }, JSON.stringify(test[0]?.data), JSON.stringify(v));
 					if (JSON.stringify(test[0]?.data) != JSON.stringify(v)) {
+						console.log('value type for v', v, evalDataType(v));
 						// If the value is not an object or array, it can't be JSON parsed
 						if (evalDataType(v) !== 'object' && evalDataType(v) !== 'array') {
 							$UnlogStores[keyValue.name].history.set([
@@ -105,10 +108,12 @@
 								...get($UnlogStores[keyValue.name].history)
 							]);
 						} else {
+							console.log('this should be used when v is array', v);
+							const newData = JSON.parse(JSON.stringify(v));
 							$UnlogStores[keyValue.name].history.set([
 								{
 									timestamp: new Date(),
-									data: JSON.parse(JSON.stringify(v))
+									data: newData
 								},
 								...get($UnlogStores[keyValue.name].history)
 							]);
@@ -133,14 +138,17 @@
 	function activateHistoryIndex(index) {
 		let historyValues = get($UnlogStores[$ActiveStoreKey].history);
 		// if index is not zero, we are looking at historical entry
+		const dataCopy = JSON.parse(JSON.stringify(historyValues[index].data));
 		if (index === 0) {
-			$UnlogStores[$ActiveStoreKey].store.set(historyValues[index].data);
+			$UnlogStores[$ActiveStoreKey].store.set(dataCopy);
+			// $UnlogStores[$ActiveStoreKey].store.set(historyValues[index].data);
 			// console.log('hisotry val', historyValues[index].data);
 			$UnlogState.rewindMode = false;
 		} else if (index > 0) {
 			$UnlogState.rewindMode = true;
 			// console.log('hisotry val', historyValues[index].data);
-			$UnlogStores[$ActiveStoreKey].store.set(historyValues[index].data);
+			$UnlogStores[$ActiveStoreKey].store.set(dataCopy);
+			// $UnlogStores[$ActiveStoreKey].store.set(historyValues[index].data);
 		} else {
 			// do nothing.
 			return;

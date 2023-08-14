@@ -9,6 +9,9 @@
 
 	const newStore = writable(5);
 	registerStore('Value store', newStore, 'page.svelte');
+
+	const arrStore = writable([1, 2, 3]);
+	registerStore('Array store', arrStore, 'page.svelte');
 </script>
 
 <style>
@@ -39,6 +42,19 @@
 			</ul>
 		</div>
 	</div>
+	<section>
+		<h2 class="text-2xl font-semibold">Other examples</h2>
+		<p>Array stores</p>
+		<div class="flex flex-wrap gap-4 justify-center items-center">
+			{#each $arrStore as item}
+				<div
+					class="w-16 h-16 rounded-lg bg-orange-400 shadow-lg grid items-center justify-center text-2xl font-semibold"
+				>
+					{item}
+				</div>
+			{/each}
+		</div>
+	</section>
 	<section class=" flex flex-col items-start gap-2">
 		<h2 class="text-2xl font-bold">Instructions</h2>
 		<p>Install the package</p>

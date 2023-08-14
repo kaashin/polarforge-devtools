@@ -6,9 +6,12 @@ export default class DisplayRow extends SvelteComponentTyped<{
     value?: null | undefined;
     key?: string | undefined;
     allowHighlight?: boolean | undefined;
+    nodeLevel?: number | undefined;
     allowDelete?: boolean | undefined;
     handleDelete?: (() => void) | undefined;
 }, {
+    change: CustomEvent<any>;
+} & {
     [evt: string]: CustomEvent<any>;
 }, {
     custom: {};
@@ -25,10 +28,13 @@ declare const __propDef: {
         value?: null | undefined;
         key?: string | undefined;
         allowHighlight?: boolean | undefined;
+        nodeLevel?: number | undefined;
         allowDelete?: boolean | undefined;
         handleDelete?: (() => void) | undefined;
     };
     events: {
+        change: CustomEvent<any>;
+    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {

@@ -3,6 +3,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { evalDataType } from './unlogEditorUtils';
 	import DisplayRow from './DisplayRow.svelte';
+	import ArrayRender from './ArrayRender.svelte';
 
 	export let store = writable({});
 	export let history = writable([]);
@@ -29,6 +30,20 @@
 		storeUnsubscribe();
 	});
 
+	function handleChange(e) {
+		console.log('handling change!', e);
+		$store = e.detail;
+	}
+
+	function handleArrayChange(e) {
+		if (Array.isArray(e.detail)) {
+			console.log('update the store!!!');
+			store.set([...e.detail]);
+		} else {
+			console.warn('Array update error: new value is not an array', e.detail);
+		}
+	}
+
 	$: store, handleStoreChange();
 </script>
 
@@ -37,9 +52,9 @@
 		{#if storeType === 'object'}
 			<!-- <ObjectEditor bind:store={$store} /> -->
 		{:else if storeType === 'array'}
-			<!-- <ArrayEditor bind:store={$store} /> -->
+			<ArrayRender arr={$store} open={true} on:change={handleArrayChange} />
 		{:else}
-			<DisplayRow key="Value" bind:value={$store} allowHighlight={false} />
+			<DisplayRow key="Value" value={$store} allowHighlight={false} on:change={handleChange} />
 		{/if}
 	</div>
 {/key}
