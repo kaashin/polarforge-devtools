@@ -26,10 +26,8 @@
  * ```
  */
 declare module '$env/static/private' {
-	export const VIRTUALENVWRAPPER_WORKON_CD: string;
 	export const npm_package_devDependencies_vitest: string;
 	export const USER: string;
-	export const WORKON_HOME: string;
 	export const npm_package_dependencies_magic_string: string;
 	export const npm_config_user_agent: string;
 	export const npm_package_devDependencies_vite: string;
@@ -40,7 +38,6 @@ declare module '$env/static/private' {
 	export const HOME: string;
 	export const OLDPWD: string;
 	export const LESS: string;
-	export const VIRTUALENVWRAPPER_PYTHON: string;
 	export const npm_package_files_1: string;
 	export const npm_package_devDependencies_sass: string;
 	export const NVM_BIN: string;
@@ -64,7 +61,6 @@ declare module '$env/static/private' {
 	export const npm_package_scripts_dev: string;
 	export const npm_package_devDependencies__playwright_test: string;
 	export const npm_package_devDependencies_prettier: string;
-	export const FORCE_COLOR: string;
 	export const LOGNAME: string;
 	export const npm_package_exports___default: string;
 	export const npm_package_type: string;
@@ -88,6 +84,7 @@ declare module '$env/static/private' {
 	export const XDG_RUNTIME_DIR: string;
 	export const WT_SESSION: string;
 	export const npm_package_scripts_test_integration: string;
+	export const npm_config_frozen_lockfile: string;
 	export const DISPLAY: string;
 	export const npm_package_scripts_test_unit: string;
 	export const LANG: string;
@@ -97,20 +94,17 @@ declare module '$env/static/private' {
 	export const npm_package_scripts_test: string;
 	export const npm_package_devDependencies__sveltejs_kit: string;
 	export const SHELL: string;
-	export const NODE_PATH: string;
 	export const npm_package_version: string;
 	export const npm_package_scripts_package_watch: string;
 	export const npm_lifecycle_event: string;
+	export const NODE_PATH: string;
 	export const npm_package_scripts_build: string;
 	export const npm_package_devDependencies_svelte: string;
 	export const npm_package_dependencies_svelte_jsoneditor: string;
 	export const npm_package_dependencies_uid: string;
-	export const VIRTUALENVWRAPPER_PROJECT_FILENAME: string;
 	export const npm_package_scripts_prepublishOnly: string;
 	export const npm_package_svelte: string;
-	export const VIRTUALENVWRAPPER_HOOK_DIR: string;
 	export const npm_package_devDependencies_doctrine: string;
-	export const VIRTUALENVWRAPPER_SCRIPT: string;
 	export const npm_package_scripts_format: string;
 	export const PWD: string;
 	export const npm_execpath: string;
@@ -118,6 +112,7 @@ declare module '$env/static/private' {
 	export const npm_package_exports___types: string;
 	export const PNPM_SCRIPT_SRC_DIR: string;
 	export const npm_package_devDependencies__sveltejs_adapter_auto: string;
+	export const npm_command: string;
 	export const npm_package_scripts_preview: string;
 	export const npm_package_devDependencies_prettier_plugin_svelte: string;
 	export const HOSTTYPE: string;
@@ -154,10 +149,8 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
-		VIRTUALENVWRAPPER_WORKON_CD: string;
 		npm_package_devDependencies_vitest: string;
 		USER: string;
-		WORKON_HOME: string;
 		npm_package_dependencies_magic_string: string;
 		npm_config_user_agent: string;
 		npm_package_devDependencies_vite: string;
@@ -168,7 +161,6 @@ declare module '$env/dynamic/private' {
 		HOME: string;
 		OLDPWD: string;
 		LESS: string;
-		VIRTUALENVWRAPPER_PYTHON: string;
 		npm_package_files_1: string;
 		npm_package_devDependencies_sass: string;
 		NVM_BIN: string;
@@ -192,7 +184,6 @@ declare module '$env/dynamic/private' {
 		npm_package_scripts_dev: string;
 		npm_package_devDependencies__playwright_test: string;
 		npm_package_devDependencies_prettier: string;
-		FORCE_COLOR: string;
 		LOGNAME: string;
 		npm_package_exports___default: string;
 		npm_package_type: string;
@@ -216,6 +207,7 @@ declare module '$env/dynamic/private' {
 		XDG_RUNTIME_DIR: string;
 		WT_SESSION: string;
 		npm_package_scripts_test_integration: string;
+		npm_config_frozen_lockfile: string;
 		DISPLAY: string;
 		npm_package_scripts_test_unit: string;
 		LANG: string;
@@ -225,20 +217,17 @@ declare module '$env/dynamic/private' {
 		npm_package_scripts_test: string;
 		npm_package_devDependencies__sveltejs_kit: string;
 		SHELL: string;
-		NODE_PATH: string;
 		npm_package_version: string;
 		npm_package_scripts_package_watch: string;
 		npm_lifecycle_event: string;
+		NODE_PATH: string;
 		npm_package_scripts_build: string;
 		npm_package_devDependencies_svelte: string;
 		npm_package_dependencies_svelte_jsoneditor: string;
 		npm_package_dependencies_uid: string;
-		VIRTUALENVWRAPPER_PROJECT_FILENAME: string;
 		npm_package_scripts_prepublishOnly: string;
 		npm_package_svelte: string;
-		VIRTUALENVWRAPPER_HOOK_DIR: string;
 		npm_package_devDependencies_doctrine: string;
-		VIRTUALENVWRAPPER_SCRIPT: string;
 		npm_package_scripts_format: string;
 		PWD: string;
 		npm_execpath: string;
@@ -246,6 +235,7 @@ declare module '$env/dynamic/private' {
 		npm_package_exports___types: string;
 		PNPM_SCRIPT_SRC_DIR: string;
 		npm_package_devDependencies__sveltejs_adapter_auto: string;
+		npm_command: string;
 		npm_package_scripts_preview: string;
 		npm_package_devDependencies_prettier_plugin_svelte: string;
 		HOSTTYPE: string;

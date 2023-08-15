@@ -4,9 +4,14 @@
 	import { EditorHighlightedRow } from './unlogEditorUtils';
 	import Icon from './../icons/Icon.svelte';
 	import TrashIcon from './../icons/TrashIcon.svelte';
+	import NumberNode from './nodes/NumberNode.svelte';
+	import BooleanNode from './nodes/BooleanNode.svelte';
+	import TextNode from './nodes/TextNode.svelte';
+	import NullNode from './nodes/NullNode.svelte';
 
 	const dispatch = createEventDispatcher();
 
+	export let bracketNode = false;
 	export let value = null;
 	export let key = '';
 	export let allowHighlight = true;
@@ -22,78 +27,9 @@
 	function handleRowClicked() {
 		$EditorHighlightedRow = id;
 	}
-
-	function handleNumberChange(e) {
-		dispatch('change', e.target.value * 1);
-	}
-
-	function handleBooleanChange(e) {
-		dispatch('change', e.target.value);
-	}
-
-	$: if (initType && (value === null || value === undefined)) {
-		if (initType === 'object') {
-			value = {};
-		} else if (initType === 'object' && Array.isArray(value)) {
-			value = [];
-		} else if (initType === 'string') {
-			value = '';
-		} else if (initType === 'number') {
-			value = 0;
-		} else if (initType === 'boolean') {
-			value = false;
-		} else {
-			value = '';
-		}
-	}
 </script>
 
 <style>
-	input {
-		background-color: inherit;
-		border: 0;
-		color: var(--input-active-border-color);
-		line-height: 0.8em;
-		margin-top: -0.2em;
-	}
-
-	input:hover {
-		border-bottom: dotted 1px var(--input-active-border-color);
-	}
-
-	input:focus {
-		outline: solid 1px var(--input-active-border-color);
-		border: none;
-		padding: 0.3em;
-	}
-
-	select {
-		background-color: inherit;
-		border: 0;
-		color: rgb(226, 226, 226);
-		font-family: 'Lucida Console', Consolas, monospace;
-		padding-left: 0.3em;
-	}
-
-	select:focus {
-		outline: solid 1px var(--input-active-border-color);
-		border: none;
-		padding: 0.3em;
-	}
-
-	[contenteditable] {
-		background-color: var(--color-dark-100);
-		padding-left: 0.3em;
-	}
-	[contenteditable]:hover {
-		border-bottom: dotted 1px var(--input-active-border-color);
-	}
-
-	[contenteditable]:focus {
-		outline: solid 1px var(--input-active-border-color);
-		padding: 0.3em;
-	}
-
 	.row {
 		display: flex;
 		/* border-bottom: solid 1px rgb(60,60,60); */
@@ -137,46 +73,48 @@
 	tabindex="0"
 	class:highlight={allowHighlight && $EditorHighlightedRow === id}
 >
-	{#if $$props.key != null || $$props.key != undefined}
+	{#if !bracketNode}
 		<span class="key">
 			{key}:
 		</span>
 	{/if}
-	{#if $$props.value != null || $$props.value != undefined}
+	<slot>
 		<span class="value">
 			{#if typeof value === 'number'}
-				<input bind:value type="number" on:change={handleNumberChange} />
+				<NumberNode bind:value on:change />
 			{:else if typeof value === 'boolean'}
-				<select bind:value on:change={handleBooleanChange}>
-					<option value={true}>true</option>
-					<option value={false}>false</option>
-				</select>
+				<!-- <select bind:value on:change={handleBooleanChange}>
+						<option value={true}>true</option>
+						<option value={false}>false</option>
+					</select> -->
+				<BooleanNode bind:value on:change />
 			{:else if typeof value === 'string'}
 				<!-- <input bind:value={value} type="text" /> -->
-				<span contenteditable bind:innerHTML={value} on:change />
+				<!-- <span contenteditable bind:innerHTML={value} on:change /> -->
+				<TextNode bind:value on:change />
 			{:else if typeof value === 'function'}
 				<span>Function</span>
+			{:else if typeof value === 'object' && value === null}
+				<NullNode on:change />
 			{:else}
 				<span>{value}</span>
 			{/if}
 		</span>
-	{:else if $$props.value === null}
-		<span><i>null</i></span>
-	{/if}
-	{#if $$slots.custom}
-		<slot name="custom" />
-	{/if}
+	</slot>
+
 	<div class="row-menu">
-		{#if $$props.allowDelete}
-			<div
-				class="icon"
-				on:click={handleDelete}
-				on:keydown={handleDelete}
-				role="button"
-				tabindex="0"
-			>
-				<Icon size="md" icon={TrashIcon} />
-			</div>
-		{/if}
+		<slot name="row-actions">
+			{#if $$props.allowDelete}
+				<div
+					class="icon"
+					on:click={handleDelete}
+					on:keydown={handleDelete}
+					role="button"
+					tabindex="0"
+				>
+					<Icon size="md" icon={TrashIcon} />
+				</div>
+			{/if}
+		</slot>
 	</div>
 </div>

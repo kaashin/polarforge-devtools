@@ -93,13 +93,13 @@
 			return keyValue.store.subscribe((v) => {
 				// Only regisster to history if we're not in rewind mode
 				if (!$UnlogState.rewindMode) {
-					console.log('keyValue', keyValue.name);
 					const test = get($UnlogStores[keyValue.name].history);
-					console.log({ test }, JSON.stringify(test[0]?.data), JSON.stringify(v));
+					console.log('hi', test, JSON.stringify(test[0]?.data), JSON.stringify(v));
 					if (JSON.stringify(test[0]?.data) != JSON.stringify(v)) {
-						console.log('value type for v', v, evalDataType(v));
 						// If the value is not an object or array, it can't be JSON parsed
-						if (evalDataType(v) !== 'object' && evalDataType(v) !== 'array') {
+						console.log('debug', evalDataType(v));
+						if (evalDataType(v) !== 'object' || evalDataType(v) !== 'array') {
+							console.log('is this triggered on update?!?!');
 							$UnlogStores[keyValue.name].history.set([
 								{
 									timestamp: new Date(),
@@ -108,7 +108,6 @@
 								...get($UnlogStores[keyValue.name].history)
 							]);
 						} else {
-							console.log('this should be used when v is array', v);
 							const newData = JSON.parse(JSON.stringify(v));
 							$UnlogStores[keyValue.name].history.set([
 								{
@@ -235,6 +234,31 @@
 	:global(.unlog .p-2) {
 		padding: 0.5rem;
 	}
+	:global(.unlog input) {
+		background-color: inherit;
+		border: 0;
+		color: var(--input-active-border-color);
+		line-height: 0.8em;
+		margin-top: -0.2em;
+	}
+	:global(.unlog input:focus) {
+		outline: solid 1px var(--input-active-border-color);
+		border: none;
+		padding: 0.3em;
+	}
+	:global(.unlog input:hover) {
+		border-bottom: dotted 1px var(--input-active-border-color);
+	}
+	:global(.unlog .editor-row-button) {
+		background-color: var(--color-dark-300);
+		padding-inline: 0.5em;
+		padding-block: 0.25em;
+		border-radius: 0.25em;
+	}
+	:global(.unlog .editor-row-button:hover) {
+		background-color: var(--color-action);
+	}
+
 	.unlog-trigger {
 		padding: var(--padding-container);
 		position: fixed;

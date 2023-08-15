@@ -30,6 +30,10 @@
 	let addingItem = false;
 	let localArr = arr;
 
+	function handleAddItem() {
+		localArr = [...localArr, null];
+	}
+
 	$: localArr, console.log('localArr change', localArr), dispatch('change', localArr);
 
 	$: if (!open) {
@@ -79,15 +83,16 @@
 </style>
 
 <DisplayRow
+	bracketNode={true}
 	{key}
 	{tabIndex}
 	allowHighlight={false}
 	{allowDelete}
 	handleDelete={() => parentDelete(key)}
 >
+	<!-- slot="custom" -->
 	<div
 		class="array-block"
-		slot="custom"
 		role="button"
 		tabindex="0"
 		on:click={() => {
@@ -107,36 +112,47 @@
 {#if open}
 	<div class="array-content">
 		{#each localArr as value, key}
-			{#if value != null || value != undefined}
-				{#if typeof value === 'object' && !Array.isArray(value)}
-					<!-- <ObjectRender
+			<!-- {#if value != null || value != undefined} -->
+			{#if typeof value === 'object' && value === null}
+				<DisplayRow
+					{key}
+					value={null}
+					tabIndex={tabIndex + 1}
+					allowDelete={true}
+					handleDelete={() => handleDelete(key)}
+					on:change={({ detail }) => {
+						localArr[key] = detail;
+					}}
+				/>
+			{:else if typeof value === 'object' && !Array.isArray(value)}
+				<!-- <ObjectRender
 						{key}
 						bind:object={value}
 						tabIndex={tabIndex + 1}
 						allowDelete={true}
 						parentDelete={() => handleDelete(key)}
 					/> -->
-				{:else if typeof value === 'object' && Array.isArray(value)}
-					<svelte:self
-						bind:arr={value}
-						tabIndex={tabIndex + 1}
-						{key}
-						allowDelete={true}
-						parentDelete={() => handleDelete(key)}
-					/>
-				{:else}
-					<DisplayRow
-						{key}
-						{value}
-						tabIndex={tabIndex + 1}
-						allowDelete={true}
-						handleDelete={() => handleDelete(key)}
-						on:change={({ detail }) => {
-							localArr[key] = detail;
-						}}
-					/>
-				{/if}
+			{:else if typeof value === 'object' && Array.isArray(value)}
+				<svelte:self
+					bind:arr={value}
+					tabIndex={tabIndex + 1}
+					{key}
+					allowDelete={true}
+					parentDelete={() => handleDelete(key)}
+				/>
 			{:else}
+				<DisplayRow
+					{key}
+					{value}
+					tabIndex={tabIndex + 1}
+					allowDelete={true}
+					handleDelete={() => handleDelete(key)}
+					on:change={({ detail }) => {
+						localArr[key] = detail;
+					}}
+				/>
+			{/if}
+			<!-- {:else}
 				<DisplayRow
 					{key}
 					bind:value
@@ -144,42 +160,18 @@
 					allowDelete={true}
 					handleDelete={() => handleDelete(key)}
 				/>
-			{/if}
+			{/if} -->
 		{/each}
 	</div>
 	<div class="add-item">
-		<DisplayRow tabIndex={tabIndex + 1}>
-			<div slot="custom">
-				{#if addingItem}
-					{arr.length}: Adding item >>>
-				{:else}
-					<div
-						class="add-item-block"
-						on:click={() => {
-							console.log('ADD ITEM');
-							// addingItem = true;
-							// $sidebarState.isOpen = true;
-							// $sidebarState.component = AddArrayItem;
-							// $sidebarState.props = {
-							// 	arr,
-							// 	updateState: (newArr) => {
-							// 		addingItem = false;
-							// 		$sidebarState.isOpen = false;
-							// 		arr = [...newArr];
-							// 		$EditorHighlightedRow = '';
-							// 	},
-							// 	onClose: (test) => {
-							// 		addingItem = false;
-							// 		$sidebarState.isOpen = false;
-							// 		$EditorHighlightedRow = '';
-							// 	}
-							// };
-						}}
-						in:fade={{ duration: 200 }}
-					>
-						<Icon size="md" icon={PlusCircle} style="padding-right: 0.4em" /> Add Item
-					</div>
-				{/if}
+		<DisplayRow tabIndex={tabIndex + 1} bracketNode={true}>
+			<div
+				class="add-item-block"
+				on:click={handleAddItem}
+				on:keydown={handleAddItem}
+				in:fade={{ duration: 200 }}
+			>
+				<Icon size="md" icon={PlusCircle} style="padding-right: 0.4em" /> Add Item
 			</div>
 		</DisplayRow>
 	</div>
