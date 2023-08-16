@@ -18,10 +18,11 @@
 	export let allowDelete = false;
 	export let parentDelete = () => {};
 	export let handleDelete = (index) => {
+		console.log('hi');
 		try {
-			let newArr = [...arr];
+			let newArr = [...localArr];
 			newArr.splice(index, 1);
-			arr = [...newArr];
+			localArr = [...newArr];
 		} catch (error) {
 			console.error(error);
 		}
