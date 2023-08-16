@@ -407,7 +407,7 @@
 				{/if}
 			</div>
 
-			<div class="editor">
+			<div class="editor" style="overflow-y: auto">
 				{#if $ActiveStoreKey}
 					{#key activeHistoryIndex || historyCount}
 						<StoreEditor store={$UnlogStores[$ActiveStoreKey].store} />

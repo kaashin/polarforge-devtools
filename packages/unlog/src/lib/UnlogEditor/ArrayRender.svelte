@@ -2,7 +2,7 @@
 	import { slide, fade } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 	import { EditorHighlightedRow } from './unlogEditorUtils';
-	// import ObjectRender from './ObjectRender.svelte';
+	import ObjectRender from './ObjectRender.svelte';
 	import DisplayRow from './DisplayRow.svelte';
 	import Chevron from './../icons/Chevron.svelte';
 	import PlusCircle from './../icons/PlusCircle.svelte';
@@ -12,13 +12,12 @@
 	const dispatch = createEventDispatcher();
 
 	export let arr = [];
-	export let open = false;
+	export let open = true;
 	export let tabIndex = 0;
 	export let key = null;
 	export let allowDelete = false;
 	export let parentDelete = () => {};
 	export let handleDelete = (index) => {
-		console.log('hi');
 		try {
 			let newArr = [...localArr];
 			newArr.splice(index, 1);
@@ -111,7 +110,7 @@
 </DisplayRow>
 
 {#if open}
-	<div class="array-content">
+	<div class="array-content" transition:slide|local={{ duration: 150 }}>
 		{#each localArr as value, key}
 			<!-- {#if value != null || value != undefined} -->
 			{#if typeof value === 'object' && value === null}
@@ -126,13 +125,16 @@
 					}}
 				/>
 			{:else if typeof value === 'object' && !Array.isArray(value)}
-				<!-- <ObjectRender
-						{key}
-						bind:object={value}
-						tabIndex={tabIndex + 1}
-						allowDelete={true}
-						parentDelete={() => handleDelete(key)}
-					/> -->
+				<ObjectRender
+					{key}
+					bind:object={value}
+					tabIndex={tabIndex + 1}
+					allowDelete={true}
+					parentDelete={() => handleDelete(key)}
+					on:change={({ detail }) => {
+						localArr[key] = detail;
+					}}
+				/>
 			{:else if typeof value === 'object' && Array.isArray(value)}
 				<svelte:self
 					bind:arr={value}

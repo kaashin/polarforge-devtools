@@ -5,10 +5,10 @@ export default class ArrayRender extends SvelteComponentTyped<{
     key?: null | undefined;
     allowDelete?: boolean | undefined;
     handleDelete?: ((index: any) => void) | undefined;
-    arr?: any[] | undefined;
     open?: boolean | undefined;
     tabIndex?: number | undefined;
     parentDelete?: (() => void) | undefined;
+    arr?: any[] | undefined;
 }, {
     change: CustomEvent<any>;
 } & {
@@ -24,10 +24,10 @@ declare const __propDef: {
         key?: null | undefined;
         allowDelete?: boolean | undefined;
         handleDelete?: ((index: any) => void) | undefined;
-        arr?: any[] | undefined;
         open?: boolean | undefined;
         tabIndex?: number | undefined;
         parentDelete?: (() => void) | undefined;
+        arr?: any[] | undefined;
     };
     events: {
         change: CustomEvent<any>;

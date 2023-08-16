@@ -9,7 +9,8 @@
 	export let value = undefined;
 
 	function handleChange(e) {
-		dispatch('change', e.target.value);
+		console.log('TEXT node detect change!');
+		dispatch('change', value);
 	}
 </script>
 
@@ -31,4 +32,4 @@
 	}
 </style>
 
-<div contenteditable bind:innerHTML={value} on:change={handleChange} />
+<div contenteditable bind:innerHTML={value} on:blur={handleChange} />

@@ -10,6 +10,8 @@ export default class ObjectRender extends SvelteComponentTyped<{
     tabIndex?: number | undefined;
     parentDelete?: (() => void) | undefined;
 }, {
+    change: CustomEvent<any>;
+} & {
     [evt: string]: CustomEvent<any>;
 }, {}> {
 }
@@ -28,6 +30,8 @@ declare const __propDef: {
         parentDelete?: (() => void) | undefined;
     };
     events: {
+        change: CustomEvent<any>;
+    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {};

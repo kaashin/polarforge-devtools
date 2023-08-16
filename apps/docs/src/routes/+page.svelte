@@ -10,7 +10,7 @@
 	const newStore = writable(5);
 	registerStore('Value store', newStore, 'page.svelte');
 
-	const arrStore = writable([1, 2, 3]);
+	const arrStore = writable(['test', '2', ' 3']);
 	registerStore('Array store', arrStore, 'page.svelte');
 </script>
 

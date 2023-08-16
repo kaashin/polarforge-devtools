@@ -4,6 +4,7 @@
 	import { evalDataType } from './unlogEditorUtils';
 	import DisplayRow from './DisplayRow.svelte';
 	import ArrayRender from './ArrayRender.svelte';
+	import ObjectRender from './ObjectRender.svelte';
 
 	export let store = writable({});
 	export let history = writable([]);
@@ -44,13 +45,22 @@
 		}
 	}
 
+	function handleObjectChange(e) {
+		console.log('RECEIVED A CHANGE!');
+		if (typeof e.detail === 'object' && !Array.isArray(e.detail) && e.detail) {
+			store.set(e.detail);
+		} else {
+			console.warn('Object update error: the new item is not a proper object?', e.detail);
+		}
+	}
+
 	$: store, handleStoreChange();
 </script>
 
 {#key store || $history}
-	<div bind:this={editorEl} style="width:100%; height: 100%">
+	<div bind:this={editorEl} style="width:100%; min-height: 100%;">
 		{#if storeType === 'object'}
-			<!-- <ObjectEditor bind:store={$store} /> -->
+			<ObjectRender object={$store} on:change={handleObjectChange} />
 		{:else if storeType === 'array'}
 			<ArrayRender arr={$store} open={true} on:change={handleArrayChange} />
 		{:else}
