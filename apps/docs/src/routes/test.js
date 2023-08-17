@@ -1,4 +1,4 @@
-export const UserObj = {
+export const bigObject = {
   "username": "rl",
   "email": "richard.lee@smartaccess.io",
   "first_name": "Richard",

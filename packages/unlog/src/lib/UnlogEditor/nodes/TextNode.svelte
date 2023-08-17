@@ -1,5 +1,5 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -9,8 +9,7 @@
 	export let value = undefined;
 
 	function handleChange(e) {
-		console.log('TEXT node detect change!');
-		dispatch('change', value);
+		dispatch('change', e.target.textContent);
 	}
 </script>
 
