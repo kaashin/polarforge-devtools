@@ -67,6 +67,7 @@
 <style>
 	.object-block {
 		display: flex;
+		justify-content: center;
 		margin-top: -0.2em;
 		padding-top: 0.2em;
 		padding-left: 0.4em;
