@@ -3,6 +3,10 @@
 	import ObjectRender from './ObjectRender.svelte';
 	import ArrayRender from './ArrayRender.svelte';
 	import DisplayRow from './DisplayRow.svelte';
+
+	/**
+	 * prop of the store
+	 */
 	export let store;
 
 	function getStoreType(currentStore) {
@@ -15,9 +19,18 @@
 		}
 	}
 
-	$: storeType = getStoreType(store);
+	/**
+	 * Parse through the store and determine the render stack
+	 */
+	function updateRender(object) {
+		console.log({ object });
+	}
 
-	$: console.log('THE STORE IS', $store);
+	// $: storeType = getStoreType(store);
+
+	$: $store, updateRender($store);
+
+	// $: console.log('THE STORE IS', $store);
 </script>
 
 <style>
@@ -28,11 +41,11 @@
 </style>
 
 <div class="render-store">
-	{#if storeType === 'object'}
+	<!-- {#if storeType === 'object'}
 		<ObjectRender bind:object={$store} />
 	{:else if storeType === 'array'}
 		<ArrayRender bind:arr={$store} />
 	{:else}
 		<DisplayRow key="Value" bind:value={$store} allowHighlight={false} />
-	{/if}
+	{/if} -->
 </div>

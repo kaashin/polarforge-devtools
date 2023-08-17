@@ -6,12 +6,28 @@
 	import bash from 'svelte-highlight/languages/bash';
 	import javascript from 'svelte-highlight/languages/javascript';
 	import 'svelte-highlight/styles/atom-one-dark.css';
+	import { bigObject } from './test.js';
 
-	const newStore = writable(5);
+	const newStore = writable(null);
 	registerStore('Value store', newStore, 'page.svelte');
 
 	const arrStore = writable(['test', '2', ' 3']);
 	registerStore('Array store', arrStore, 'page.svelte');
+
+	const objStore = writable({
+		title: 'Title',
+		value: 5,
+		nested: {
+			name: 'name',
+			level2: {
+				place: 'home'
+			}
+		}
+	});
+	registerStore('Object store', objStore, 'page.svelte');
+
+	const bigStore = writable(bigObject);
+	registerStore('Big object store', bigStore, 'page.svelte');
 </script>
 
 <style>

@@ -73,7 +73,7 @@
 	tabindex="0"
 	class:highlight={allowHighlight && $EditorHighlightedRow === id}
 >
-	{#if !bracketNode}
+	{#if key}
 		<span class="key">
 			{key}:
 		</span>
