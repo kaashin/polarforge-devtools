@@ -138,6 +138,7 @@
 					key={property.key}
 					tabIndex={tabIndex + 1}
 					allowDelete={true}
+					open={false}
 					handleDelete={() => {
 						handleDelete(property.key);
 					}}
@@ -152,6 +153,7 @@
 					arr={property.value}
 					key={property.key}
 					tabIndex={tabIndex + 1}
+					open={false}
 					allowDelete={true}
 					parentDelete={() => handleDelete(key)}
 					on:change={(e) => {

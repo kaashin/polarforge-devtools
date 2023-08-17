@@ -62,7 +62,7 @@
 		{#if storeType === 'object'}
 			<ObjectRender object={$store} on:change={handleObjectChange} />
 		{:else if storeType === 'array'}
-			<ArrayRender arr={$store} open={true} on:change={handleArrayChange} />
+			<ArrayRender arr={$store} open={false} on:change={handleArrayChange} />
 		{:else}
 			<DisplayRow key="Value" value={$store} allowHighlight={false} on:change={handleChange} />
 		{/if}
