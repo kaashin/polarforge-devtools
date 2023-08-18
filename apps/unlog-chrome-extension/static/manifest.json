@@ -1,0 +1,11 @@
+{
+  "name": "Svelte Unlog",
+  "description": "Svelte Unlog browser extension",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Svelte Unlog Extension",
+    "default_icon": "favicon.png",
+    "default_popup": "index.html"
+  }
+}
